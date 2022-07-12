@@ -1,0 +1,46 @@
+{
+    "name": "inputMaster",
+    "maps": [
+        {
+            "name": "player",
+            "id": "9ca013e6-bab5-429e-b382-57a9069aeeec",
+            "actions": [
+                {
+                    "name": "action",
+                    "type": "Button",
+                    "id": "53f4c0ab-6dc1-4b9a-93ab-192aca21e2c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e1e15752-e212-4ca9-8cca-97fc632e0ab4",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Xbox Control Scheme",
+                    "action": "action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Xbox Control Scheme",
+            "bindingGroup": "Xbox Control Scheme",
+            "devices": [
+                {
+                    "devicePath": "<XInputController>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
