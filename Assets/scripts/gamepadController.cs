@@ -50,6 +50,11 @@ public class gamepadController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("goku");
+        }
+
 
         prevState = state;
         state = GamePad.GetState(playerIndex);

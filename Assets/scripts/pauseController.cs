@@ -37,7 +37,7 @@ public class pauseController : MonoBehaviour
     Vector3 pene2 = new Vector3(.76f, .76f, .76f);
     Vector3 pene1;
 
-
+    public GameObject buttonController;
 
 
 
@@ -93,7 +93,17 @@ public class pauseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ButtonEnableDisableCanvas();
+            if (buttonController.GetComponent<buttonController>().optionsToggle == true)
+            {
+                ButtonEnableDisableCanvas();
+
+            }
+            else
+            {
+                buttonController.GetComponent<buttonController>().ButtonOptions();
+                ButtonEnableDisableCanvas();
+
+            }
         }
 
         prevState = state;
@@ -101,14 +111,32 @@ public class pauseController : MonoBehaviour
 
         if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed)
         {
-            ButtonEnableDisableCanvas();
+            if (buttonController.GetComponent<buttonController>().optionsToggle == true)
+            {
+                ButtonEnableDisableCanvas();
+
+            }
+            else
+            {
+                buttonController.GetComponent<buttonController>().ButtonOptions();
+                ButtonEnableDisableCanvas();
+
+            }
 
         }
         if (isCanvasOn)
         {
             if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
             {
-                ButtonEnableDisableCanvas();
+                if (buttonController.GetComponent<buttonController>().optionsToggle == true)
+                {
+                    ButtonEnableDisableCanvas();
+
+                }
+                else
+                {
+                    buttonController.GetComponent<buttonController>().ButtonOptions();
+                }
 
             }
         }

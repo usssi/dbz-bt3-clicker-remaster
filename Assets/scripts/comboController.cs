@@ -29,7 +29,7 @@ public class comboController : MonoBehaviour
 
     public GameObject gamepadController;
 
-    private bool comboCanBeActivated;
+    public bool comboCanBeActivated;
 
     public int duration;
     public float durationTimerText;
@@ -62,6 +62,8 @@ public class comboController : MonoBehaviour
 
     public GameObject inpuTExt;
 
+    public bool autoCombo;
+
 
 
 
@@ -77,11 +79,7 @@ public class comboController : MonoBehaviour
         boostText.SetActive(false);
         aAnimationButton.SetActive(false);
         inputCounterImage.SetActive(false);
-
-
         
-
-
     }
 
     void Update()
@@ -143,6 +141,15 @@ public class comboController : MonoBehaviour
 
                     rLComboPress = true;
                     DoShit();
+                }
+
+                if (autoCombo)
+                {
+                    durationTimerText = duration + 1;
+
+                    rLComboPress = true;
+                    DoShit();
+
                 }
             }
             else if (fillAmount < .99)
@@ -219,11 +226,7 @@ public class comboController : MonoBehaviour
             timeBarFill.GetComponent<Image>().fillAmount = 1;
             comboData.GetComponent<TextMeshProUGUI>().colorGradientPreset = yellow;
 
-
         }
-
-
-
 
     }
 
@@ -237,7 +240,7 @@ public class comboController : MonoBehaviour
         aAnimationButton.SetActive(true);
         inputCounterImage.SetActive(true);
 
-
+        comboBarFondo.GetComponent<Image>().color = Color.cyan;
 
 
 
@@ -265,6 +268,9 @@ public class comboController : MonoBehaviour
         boostText.SetActive(false);
         aAnimationButton.SetActive(false);
         inputCounterImage.SetActive(false);
+
+        comboBarFondo.GetComponent<Image>().color = Color.white;
+
 
 
 

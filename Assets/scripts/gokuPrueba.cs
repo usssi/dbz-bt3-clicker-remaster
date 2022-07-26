@@ -21,14 +21,21 @@ public class gokuPrueba : MonoBehaviour
 
     private bool esperaPaClickear = true;
 
+    public GameObject combocontroller;
+    public bool boostIsOn;
+
     private void Awake()
     {
         controls = new InputMaster();
         Invoke("Esperaculiado", 0.1f);
+
+        boostIsOn = combocontroller.GetComponent<comboController>().comboCanBeActivated;
     }
 
     private void Update()
     {
+        boostIsOn = combocontroller.GetComponent<comboController>().comboCanBeActivated;
+
         prevState = state;
         state = GamePad.GetState(playerIndex);
 
@@ -50,12 +57,21 @@ public class gokuPrueba : MonoBehaviour
                     goku2.SetActive(true);
                 }
                 FindObjectOfType<AudioManager>().Play("click_down", Random.Range( 0.7f , 1.3f));
+                if (!boostIsOn)
+                {
+                    FindObjectOfType<AudioManager>().Play("boostedDOWN", 1);
 
+                }
             }
 
             if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released)
             {
                 FindObjectOfType<AudioManager>().Play("click_up", Random.Range(0.7f, 1.3f));
+                if (!boostIsOn)
+                {
+                    FindObjectOfType<AudioManager>().Play("boostedUP", 1);
+
+                }
             }
         }
         

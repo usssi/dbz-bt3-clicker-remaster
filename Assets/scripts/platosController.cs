@@ -116,7 +116,6 @@ public class platosController : MonoBehaviour
             }
         }
 
-        print(inputcount);
     }
 
     void Plato0()
