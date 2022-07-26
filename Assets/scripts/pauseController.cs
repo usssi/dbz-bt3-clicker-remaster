@@ -147,7 +147,9 @@ public class pauseController : MonoBehaviour
 
                 comboController.GetComponent<comboController>().isPaused = true;
 
-                ereele.GetComponent<shakerScript>().magnitude = 0;
+                ereele.GetComponent<shakerScript>().magnitudeX = 0;
+                ereele.GetComponent<shakerScript>().magnitudeY = 0;
+
 
                 cameraObject.GetComponent<cameraShake>().enabled = false;
                 cameraObject.GetComponent<changeBG>().enabled = false;
@@ -178,7 +180,9 @@ public class pauseController : MonoBehaviour
 
             comboController.GetComponent<comboController>().isPaused = false;
 
-            ereele.GetComponent<shakerScript>().magnitude = 2;
+            ereele.GetComponent<shakerScript>().magnitudeX = 2;
+            ereele.GetComponent<shakerScript>().magnitudeY = 2;
+
 
             cameraObject.GetComponent<cameraShake>().enabled = true;
 

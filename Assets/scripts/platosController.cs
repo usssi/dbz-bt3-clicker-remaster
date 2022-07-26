@@ -37,6 +37,8 @@ public class platosController : MonoBehaviour
     Animator platoAnimator;
     int currentKeyFrame = 0;
 
+    public int inputcount;
+
     private void Start()
     {
         platoAnimator = platoDefinitivo.GetComponent<Animator>();
@@ -52,10 +54,13 @@ public class platosController : MonoBehaviour
             if (numeroPlato >= 0 && numeroPlato <= 58)
             {
                 numeroPlato += inputPlus;
+                inputcount += inputPlus;
+
 
             }
             else if (numeroPlato >= 59)
             {
+                numeroPlato += inputPlus;
                 numeroPlato = 0;
             }
 
@@ -110,6 +115,8 @@ public class platosController : MonoBehaviour
                     break;
             }
         }
+
+        print(inputcount);
     }
 
     void Plato0()
@@ -401,6 +408,8 @@ public class platosController : MonoBehaviour
             inputPlus = intensidad;
             Invoke("PowerUpDisable", duracion);
             buttonCanBeActivated = false;
+            inputcount = 0;
+
         }
         else
         {
@@ -413,7 +422,10 @@ public class platosController : MonoBehaviour
     {
         inputPlus = 1;
         buttonCanBeActivated = true;
+        inputcount = 0;
 
     }
+
+
 
 }

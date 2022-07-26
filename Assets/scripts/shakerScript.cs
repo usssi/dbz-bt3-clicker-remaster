@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class shakerScript : MonoBehaviour
 {
-    public float magnitude;
+    public float magnitudeX;
+    public float magnitudeY;
+
     private Vector3 originalPos;
 
     private void Start()
@@ -14,8 +16,8 @@ public class shakerScript : MonoBehaviour
 
     void Update()
     {
-        float xX = Random.Range(-1f, 1f) * magnitude;
-        float yX = Random.Range(-1f, 1f) * magnitude;
+        float xX = Random.Range(-1f, 1f) * magnitudeX;
+        float yX = Random.Range(-1f, 1f) * magnitudeY;
 
         transform.localPosition = new Vector3(originalPos.x + xX, originalPos.y + yX, originalPos.z);
         Invoke("ComeBack",1);

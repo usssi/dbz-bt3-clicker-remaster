@@ -19,6 +19,12 @@ public class comboController : MonoBehaviour
     public GameObject platosContoller;
     public GameObject changeBGContoller;
     public GameObject ereele;
+    public GameObject maxPower;
+    public GameObject boostText;
+    public GameObject aAnimationButton;
+    public GameObject inputCounterImage;
+
+
     public GameObject comboData;
 
     public GameObject gamepadController;
@@ -33,8 +39,6 @@ public class comboController : MonoBehaviour
     public GameObject ComboBarFill;
     public GameObject timeBarFill;
     public GameObject rayios;
-
-
 
 
     public float fillAmount;
@@ -56,6 +60,8 @@ public class comboController : MonoBehaviour
 
     public float minimunFillTime;
 
+    public GameObject inpuTExt;
+
 
 
 
@@ -68,6 +74,12 @@ public class comboController : MonoBehaviour
         durationTimerText = duration+1;
 
         rayios.SetActive(false);
+        boostText.SetActive(false);
+        aAnimationButton.SetActive(false);
+        inputCounterImage.SetActive(false);
+
+
+        
 
 
     }
@@ -121,6 +133,8 @@ public class comboController : MonoBehaviour
             if (fillAmount > .99)
             {
                 rayios.SetActive(true);
+                maxPower.SetActive(true);
+
 
                 ereele.SetActive(true);
                 if (l1 && r1)
@@ -134,6 +148,8 @@ public class comboController : MonoBehaviour
             else if (fillAmount < .99)
             {
                 rayios.SetActive(false);
+                maxPower.SetActive(false);
+
 
                 ereele.SetActive(false);
 
@@ -167,6 +183,8 @@ public class comboController : MonoBehaviour
         }
         doradoBarFill.GetComponent<Image>().fillAmount = lerpedshit;
 
+
+        inpuTExt.GetComponent<TextMeshProUGUI>().text = platosContoller.GetComponent<platosController>().inputcount.ToString();
 
     }
 
@@ -212,7 +230,15 @@ public class comboController : MonoBehaviour
     public void DoShit()
     {
         ereele.SetActive(false);
+        maxPower.SetActive(false);
+
         comboData.SetActive(true);
+        boostText.SetActive(true);
+        aAnimationButton.SetActive(true);
+        inputCounterImage.SetActive(true);
+
+
+
 
 
         FindObjectOfType<AudioManager>().Play("powerUP", 1f);
@@ -236,6 +262,12 @@ public class comboController : MonoBehaviour
         fillAmount = 0;
         rLComboPress = false;
         shitTrue = false;
+        boostText.SetActive(false);
+        aAnimationButton.SetActive(false);
+        inputCounterImage.SetActive(false);
+
+
+
     }
 
     void ColorChanger() 
