@@ -34,14 +34,11 @@ public class platosController : MonoBehaviour
     GamePadState state;
     GamePadState prevState;
 
-    Animator platoAnimator;
-    int currentKeyFrame = 0;
-
     public int inputcount;
 
     private void Start()
     {
-        platoAnimator = platoDefinitivo.GetComponent<Animator>();
+
     }
 
     void Update()

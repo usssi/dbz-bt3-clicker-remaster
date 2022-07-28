@@ -206,8 +206,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 643159645}
     m_SelectOnDown: {fileID: 1562301474}
     m_SelectOnLeft: {fileID: 0}
@@ -1303,7 +1303,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
     m_HighlightedColor: {r: 0.50375986, g: 0, b: 1, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.50388145, g: 0, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1697,8 +1697,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 552827795}
     m_SelectOnDown: {fileID: 991512555}
     m_SelectOnLeft: {fileID: 0}
@@ -1706,8 +1706,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.45098042, b: 0, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 0.4504516, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3563,8 +3563,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.49411768, g: 0, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.4953642, g: 0, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -4055,7 +4055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1562301474}
     m_SelectOnDown: {fileID: 54460906}
@@ -5075,8 +5075,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 942916658}
     m_SelectOnDown: {fileID: 870706375}
     m_SelectOnLeft: {fileID: 0}
@@ -5475,7 +5475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 833588081}
     m_SelectOnDown: {fileID: 942916658}
@@ -5733,8 +5733,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 870706375}
     m_SelectOnDown: {fileID: 833588081}
     m_SelectOnLeft: {fileID: 0}
@@ -6126,10 +6126,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 6
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 305265833}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 991512555}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -6780,7 +6780,7 @@ MonoBehaviour:
   comboController: {fileID: 426354581}
   moneyText: {fileID: 1019362086}
   maxMinShinyChance: 0
-  maxDuration: 25
+  maxDuration: 30
   botonMulti: {fileID: 213180898}
   botonDuration: {fileID: 552827795}
   botonShiny: {fileID: 305265833}
@@ -6805,6 +6805,10 @@ MonoBehaviour:
   shinyinfo: {fileID: 1219786625}
   timeBarFill: {fileID: 87944845}
   multiplierTxt: {fileID: 675699965}
+  particulaes: {fileID: 1358099169930699336, guid: fb62605a1aca53041a002a15b7752bcd, type: 3}
+  particulaCuadrada: {fileID: 8332250168277834131, guid: 926c1fc7599dac74fac1a53b964d340b, type: 3}
+  particulaShiny: {fileID: 304728576660871324, guid: aee077d766ea0bf4c952dec56205adb9, type: 3}
+  particulaButton: {fileID: 825955205826358249, guid: c8aa7a9eb9f2c874a9f31b6e9ddeff53, type: 3}
 --- !u!4 &1143859318
 Transform:
   m_ObjectHideFlags: 0
@@ -8242,8 +8246,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 0
+    m_Mode: 2
+    m_WrapAround: 1
     m_SelectOnUp: {fileID: 54460906}
     m_SelectOnDown: {fileID: 643159645}
     m_SelectOnLeft: {fileID: 0}

@@ -66,6 +66,12 @@ public class StoreController : MonoBehaviour
     private bool multiAnimationBool;
     private float lerpedAnimationMultiplier;
 
+    public GameObject particulaes;
+    public GameObject particulaCuadrada;
+    public GameObject particulaShiny;
+    public GameObject particulaButton;
+
+
 
 
 
@@ -259,10 +265,26 @@ public class StoreController : MonoBehaviour
 
             precioShinyMulti += 50;
 
+            var colors = botonShiny.colors;
+
+            colors.pressedColor = Color.green;
+            botonShiny.colors = colors;
+
+            Instantiate(particulaShiny, new Vector3(-6.83f, 1.15f, 0), transform.rotation);
+
+            GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.24f, -2.79f, 0), transform.rotation);
+            buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+
         }
         else
         {
             FindObjectOfType<AudioManager>().Play("buttonDenied", 1);
+
+            var colors = botonShiny.colors;
+
+            colors.pressedColor = Color.red;
+            botonShiny.colors = colors;
+
 
         }
 
@@ -303,11 +325,28 @@ public class StoreController : MonoBehaviour
             precioTimerMulti += 50;
 
             comboController.GetComponent<comboController>().minimunFillTime += .06f;
-          
+
+            var colors = botonDuration.colors;
+
+            colors.pressedColor = Color.green;
+            botonDuration.colors = colors;
+
+            Instantiate(particulaCuadrada, new Vector3(-7.295f, 1, 0), transform.rotation);
+
+            GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -1.57f, 0), transform.rotation);
+            buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+
         }
         else
         {
             FindObjectOfType<AudioManager>().Play("buttonDenied", 1);
+
+            var colors = botonDuration.colors;
+
+            colors.pressedColor = Color.red;
+            botonDuration.colors = colors;
+
+
 
         }
 
@@ -382,11 +421,27 @@ public class StoreController : MonoBehaviour
 
             precioMulti += precioMultiMulti;
             precioMultiMulti += 50;
+
+            var colors = botonMulti.colors;
+
+            colors.pressedColor = Color.green;
+            botonMulti.colors = colors;
+
+            Instantiate(particulaes, new Vector3(-8.324f, 1.14f, 0), transform.rotation);
+
+
+            GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -0.47f, 0), transform.rotation);
+            buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+
         }
         else
         {
             FindObjectOfType<AudioManager>().Play("buttonDenied", 1);
 
+            var colors = botonMulti.colors;
+
+            colors.pressedColor = Color.red;
+            botonMulti.colors = colors;
         }
 
 
