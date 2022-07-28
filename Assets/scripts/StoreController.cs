@@ -71,9 +71,7 @@ public class StoreController : MonoBehaviour
     public GameObject particulaShiny;
     public GameObject particulaButton;
 
-
-
-
+    public GameObject storecanvas2;
 
     void Start()
     {
@@ -83,6 +81,8 @@ public class StoreController : MonoBehaviour
         precioMultiMulti = 50;
         precioTimerMulti = 50;
         precioShinyMulti = 50;
+
+        storecanvas2.GetComponent<Animator>().speed = 0;
 
     }
 
@@ -224,6 +224,11 @@ public class StoreController : MonoBehaviour
                 StoreToggle();
             }
 
+            storecanvas2.GetComponent<Animator>().speed = 2;
+
+            storecanvas2.GetComponent<Animator>().SetBool("storeisopen", false);
+
+
         }
         else if (storeOn)
         {
@@ -238,6 +243,11 @@ public class StoreController : MonoBehaviour
             gamepadController.GetComponent<gamepadController>().canVibrate = true;
             camController.GetComponent<zoomController>().isInStore = false;
             camController.GetComponent<changeBG>().isInStore = false;
+
+            storecanvas2.GetComponent<Animator>().speed = 3;
+
+            storecanvas2.GetComponent<Animator>().SetBool("storeisopen", true);
+
 
         }
 
