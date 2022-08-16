@@ -280,10 +280,10 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.green;
             botonShiny.colors = colors;
 
-            Instantiate(particulaShiny, new Vector3(-6.83f, 1.15f, 0), transform.rotation);
+            //Instantiate(particulaShiny, new Vector3(-6.83f, 1.15f, 0), transform.rotation);
 
-            GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.24f, -2.79f, 0), transform.rotation);
-            buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+            //GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.24f, -2.79f, 0), transform.rotation);
+            //buttonParticle.transform.localScale = new Vector3(5, 5, 1);
 
         }
         else
@@ -341,10 +341,10 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.green;
             botonDuration.colors = colors;
 
-            Instantiate(particulaCuadrada, new Vector3(-7.295f, 1, 0), transform.rotation);
+            //Instantiate(particulaCuadrada, new Vector3(-7.295f, 1, 0), transform.rotation);
 
-            GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -1.57f, 0), transform.rotation);
-            buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+            //GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -1.57f, 0), transform.rotation);
+            //buttonParticle.transform.localScale = new Vector3(5, 5, 1);
 
         }
         else
@@ -437,11 +437,11 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.green;
             botonMulti.colors = colors;
 
-            Instantiate(particulaes, new Vector3(-8.324f, 1.14f, 0), transform.rotation);
+            //Instantiate(particulaes, new Vector3(-8.324f, 1.14f, 0), transform.rotation);
 
 
-            GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -0.47f, 0), transform.rotation);
-            buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+            //GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -0.47f, 0), transform.rotation);
+            //buttonParticle.transform.localScale = new Vector3(5, 5, 1);
 
         }
         else
@@ -472,6 +472,7 @@ public class StoreController : MonoBehaviour
     {
         initialMoney = (int)currentMoney;
 
+        FindObjectOfType<AudioManager>().Play("sellButton", 1);
 
         money += 9999;
     }

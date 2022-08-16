@@ -402,7 +402,7 @@ public class platosController : MonoBehaviour
         if (buttonCanBeActivated)
         {
             inputPlus = intensidad;
-            Invoke("PowerUpDisable", duracion);
+            Invoke("PowerUpDisable", duracion+.1f);
             buttonCanBeActivated = false;
             inputcount = 0;
 

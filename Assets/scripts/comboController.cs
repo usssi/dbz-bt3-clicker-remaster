@@ -61,6 +61,8 @@ public class comboController : MonoBehaviour
     public float minimunFillTime;
 
     public GameObject inpuTExt;
+    public GameObject comboFinalNUmber;
+
 
     public bool autoCombo;
 
@@ -79,7 +81,9 @@ public class comboController : MonoBehaviour
         boostText.SetActive(false);
         aAnimationButton.SetActive(false);
         inputCounterImage.SetActive(false);
-        
+
+        comboFinalNUmber.SetActive(false);
+
     }
 
     void Update()
@@ -222,10 +226,8 @@ public class comboController : MonoBehaviour
         }
         else
         {
-
             timeBarFill.GetComponent<Image>().fillAmount = 1;
             comboData.GetComponent<TextMeshProUGUI>().colorGradientPreset = yellow;
-
         }
 
     }
@@ -242,8 +244,6 @@ public class comboController : MonoBehaviour
 
         comboBarFondo.GetComponent<Image>().color = Color.cyan;
 
-
-
         FindObjectOfType<AudioManager>().Play("powerUP", 1f);
         comboCanBeActivated = false;
 
@@ -252,8 +252,6 @@ public class comboController : MonoBehaviour
         changeBGContoller.GetComponent<changeBG>().ButtonPressMultiComboBGChange(duration, intensidad/2);
         changeBGContoller.GetComponent<zoomController>().ButtonPressMultiComboZoom(duration, intensidad);
         gamepadController.GetComponent<gamepadController>().OnButtonActivatePowerUpShaker(duration, intensidad);
-
-
 
         Invoke("StopDoingShit", duration);
 
@@ -269,10 +267,14 @@ public class comboController : MonoBehaviour
         aAnimationButton.SetActive(false);
         inputCounterImage.SetActive(false);
 
+        comboFinalNUmber.SetActive(true);
+
+        comboFinalNUmber.GetComponent<TextMeshProUGUI>().color = Color.white;
+        comboFinalNUmber.GetComponent<TextMeshProUGUI>().text = inpuTExt.GetComponent<TextMeshProUGUI>().text;
+
+        StartCoroutine(DoAThingOverTime(Color.white, Color.clear, 2));
+
         comboBarFondo.GetComponent<Image>().color = Color.white;
-
-
-
 
     }
 
@@ -282,5 +284,16 @@ public class comboController : MonoBehaviour
         ComboBarFill.GetComponent<Image>().color = fillColor;
     }
 
-   
+    IEnumerator DoAThingOverTime(Color start, Color end, float duration)
+    {
+        for (float t = 0f; t < duration; t += Time.deltaTime)
+        {
+            float normalizedTime = t / duration;
+            comboFinalNUmber.GetComponent<TextMeshProUGUI>().color = Color.Lerp(start, end, normalizedTime);
+            yield return null;
+        }
+        comboFinalNUmber.GetComponent<TextMeshProUGUI>().color = end;
+        comboFinalNUmber.SetActive(false);
+    }
+
 }
