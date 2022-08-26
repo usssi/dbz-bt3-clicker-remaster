@@ -5,7 +5,6 @@ using XInputDotNetPure;
 
 public class zoomController : MonoBehaviour
 {
-
     PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
@@ -24,6 +23,8 @@ public class zoomController : MonoBehaviour
 
     public bool isInStore;
 
+    public Camera mainCamera;
+
 
     void Start()
     {
@@ -31,14 +32,15 @@ public class zoomController : MonoBehaviour
         camPositionFinal = new Vector3(0, 0, 0);
 
         camSizeDefault = 3.5f;
-        camSizeFinal = 5;
-            //Camera.main.orthographicSize;
+        camSizeFinal = 5f;
+
+        //Camera.main.orthographicSize;
 
         time = 0;
-
         resta = .05f;
 
         buttonCanBeActivated = true;
+
         multiCombo = 1;
 
     }
@@ -50,14 +52,14 @@ public class zoomController : MonoBehaviour
 
         if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
         {
+            Debug.Log("button a");
+
             if (isInStore==false)
             {
                 time += .01f * multiCombo;
                 //ZoomerController(stackAmount);
-            }
-           
+            }           
         }
-
     }
 
     private void FixedUpdate()
@@ -108,8 +110,7 @@ public class zoomController : MonoBehaviour
 
         //lerp la posicion de la camara entre la original y la final
         transform.localPosition = Vector3.Lerp(camPositionDefault, camPositionFinal, time);
-        Camera.main.orthographicSize = Mathf.Lerp(camSizeDefault, camSizeFinal, time);
-
+        mainCamera.orthographicSize = Mathf.Lerp(camSizeDefault, camSizeFinal, time);
 
     }
 
@@ -117,7 +118,7 @@ public class zoomController : MonoBehaviour
     {
         camPositionDefault = new Vector3(camPositionDefault.x + .13f, camPositionDefault.y + .05f, camPositionDefault.z);
         camSizeDefault += .08f;
-        //Debug.Log("get zoomed");
+        Debug.Log("get zoomed");
     }
 
     public void ButtonPressMultiComboZoom(int duracion, int intensidad)
@@ -127,15 +128,11 @@ public class zoomController : MonoBehaviour
             if (intensidad<=6)
             {
                 multiCombo = intensidad / 2;
-
             }
             if (intensidad > 6)
             {
                 multiCombo = intensidad / 3;
-
             }
-
-
             Invoke("PowerUpDisable", duracion);
             buttonCanBeActivated = false;
         }
@@ -151,7 +148,5 @@ public class zoomController : MonoBehaviour
     {
         camPositionDefault = new Vector3(-2.5f, -1, 0);
         camSizeDefault = 3.5f;
-
-        Debug.Log("camdefalut");
     }
 }

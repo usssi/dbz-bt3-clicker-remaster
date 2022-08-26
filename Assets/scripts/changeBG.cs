@@ -79,7 +79,7 @@ public class changeBG : MonoBehaviour
         if (gradientValue >= 1)
         {
             gradientValue = 1;
-            print("lets fuckin goooo");
+            //print("lets fuckin goooo");
         }
 
         //esto mide la velocidad con la que baja la intensidad dependiendo de a que nivel de intensidad está

@@ -65,10 +65,12 @@ public class StoreController : MonoBehaviour
     private bool multiAnimationBool;
     private float lerpedAnimationMultiplier;
 
-    public GameObject particulaes;
-    public GameObject particulaCuadrada;
-    public GameObject particulaShiny;
-    public GameObject particulaButton;
+    public GameObject partMultiButton;
+    public GameObject partTimerButton;
+    public GameObject partShinyButton;
+    public GameObject partMulti;
+    public GameObject partTimer;
+    public GameObject partShiny;
 
     public GameObject storecanvas2;
 
@@ -89,12 +91,12 @@ public class StoreController : MonoBehaviour
 
         storecanvas2.GetComponent<Animator>().speed = 0;
 
+        DisablePart();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         TimeAnimation();
         MultiAnimation();
 
@@ -252,7 +254,7 @@ public class StoreController : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("storeClose", 1);
             playerController.SetActive(true);
             comboController.GetComponent<comboController>().isPaused = false;
-            gamepadController.GetComponent<gamepadController>().canVibrate = true;
+            //gamepadController.GetComponent<gamepadController>().canVibrate = true;
             camController.GetComponent<zoomController>().isInStore = false;
             camController.GetComponent<changeBG>().isInStore = false;
 
@@ -295,10 +297,10 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.green;
             botonShiny.colors = colors;
 
-            //Instantiate(particulaShiny, new Vector3(-6.83f, 1.15f, 0), transform.rotation);
+            partShiny.SetActive(true);
+            partShinyButton.SetActive(true);
 
-            //GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.24f, -2.79f, 0), transform.rotation);
-            //buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+            Invoke("DisablePart", .7f);
 
         }
         else
@@ -309,7 +311,6 @@ public class StoreController : MonoBehaviour
 
             colors.pressedColor = Color.red;
             botonShiny.colors = colors;
-
 
         }
 
@@ -358,10 +359,10 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.green;
             botonDuration.colors = colors;
 
-            //Instantiate(particulaCuadrada, new Vector3(-7.295f, 1, 0), transform.rotation);
+            partTimer.SetActive(true);
+            partTimerButton.SetActive(true);
 
-            //GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -1.57f, 0), transform.rotation);
-            //buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+            Invoke("DisablePart", .7f);
 
         }
         else
@@ -454,11 +455,10 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.green;
             botonMulti.colors = colors;
 
-            //Instantiate(particulaes, new Vector3(-8.324f, 1.14f, 0), transform.rotation);
+            partMultiButton.SetActive(true);
+            partMulti.SetActive(true);
 
-
-            //GameObject buttonParticle = Instantiate(particulaes, new Vector3(0.2f, -0.47f, 0), transform.rotation);
-            //buttonParticle.transform.localScale = new Vector3(5, 5, 1);
+            Invoke("DisablePart", .7f);
 
         }
         else
@@ -540,6 +540,18 @@ public class StoreController : MonoBehaviour
             lerpedAnimationMultiplier = 1;
             multiAnimationBool = false;
         }
+    }
+
+    private void DisablePart()
+    {
+        partShiny.SetActive(false);
+        partShinyButton.SetActive(false);
+
+        partTimer.SetActive(false);
+        partTimerButton.SetActive(false);
+
+        partMulti.SetActive(false);
+        partMultiButton.SetActive(false);
     }
 
 }
