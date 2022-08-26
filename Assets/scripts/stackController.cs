@@ -16,15 +16,21 @@ public class stackController : MonoBehaviour
 
     private int iStackNumber;
     private int i;
+    private int multiplierCalculator;
+    private int multiplierSeller;
 
-
-    private bool isSelling;
+    public bool isSelling;
     public GameObject camController;
     public GameObject gamepadController;
 
     private Color dorado = new Color(1,.86f, .46f);
 
     public Button sellButton;
+
+    public Text textoProfit;
+    private int multicalc;
+    private int profitNumber;
+
 
     private void Start()
     {
@@ -35,6 +41,8 @@ public class stackController : MonoBehaviour
         {
             item.GetComponent<SpriteRenderer>().enabled = false;
         }
+
+        multiplierSeller = 1;
 
     }
 
@@ -48,8 +56,8 @@ public class stackController : MonoBehaviour
         if (iStackNumber>=95)
         {
             SellStacks();
-            comboController.GetComponent<comboController>().isPaused = true;
-            gamepadController.GetComponent<gamepadController>().canVibrate = false;
+            //comboController.GetComponent<comboController>().isPaused = true;
+            //gamepadController.GetComponent<gamepadController>().canVibrate = false;
             camController.GetComponent<zoomController>().isInStore = true;
             camController.GetComponent<changeBG>().isInStore = true;
         }
@@ -59,8 +67,8 @@ public class stackController : MonoBehaviour
         {
             iStackNumber = 0;
             playerObj.SetActive(true);
-            comboController.GetComponent<comboController>().isPaused = false;
-            gamepadController.GetComponent<gamepadController>().canVibrate = true;
+            //comboController.GetComponent<comboController>().isPaused = false;
+            //gamepadController.GetComponent<gamepadController>().canVibrate = true;
             camController.GetComponent<zoomController>().isInStore = false;
             camController.GetComponent<changeBG>().isInStore = false;
             i = 0;
@@ -90,7 +98,6 @@ public class stackController : MonoBehaviour
                 isSelling = false;
             }
         }
-
 
         #region oldcode
         //print(stackList.Length);
@@ -162,7 +169,7 @@ public class stackController : MonoBehaviour
         //}
         #endregion
 
-
+        //Debug.Log("istacknumber: " + iStackNumber);
 
     }
 
@@ -186,8 +193,103 @@ public class stackController : MonoBehaviour
         //Debug.Log("is it dorado? " + isItDorado);
     }
 
+    public void CalculaordeProfit()
+    {
+        int multiplierCalculatorx = iStackNumber;
+
+        profitNumber = 0;
+
+        if (multiplierCalculatorx >= 1 && multiplierCalculatorx <= 19)
+        {
+            multicalc = 1;
+
+        }
+        else if (multiplierCalculatorx > 19 && multiplierCalculatorx <= 38)
+        {
+            multicalc = 2;
+
+        }
+        else if (multiplierCalculatorx > 38 && multiplierCalculatorx <= 57)
+        {
+            multicalc = 3;
+
+        }
+        else if (multiplierCalculatorx > 57 && multiplierCalculatorx <= 76)
+        {
+            multicalc = 4;
+
+        }
+        else if (multiplierCalculatorx > 76 && multiplierCalculatorx < 95)
+        {
+            multicalc = 5;
+
+        }
+        else if (multiplierCalculatorx == 95)
+        {
+            multicalc = 10;
+
+        }
+
+        foreach (var item in stackList)
+        {
+            if (item.GetComponent<SpriteRenderer>().enabled && item.GetComponent<SpriteRenderer>().color == Color.white)
+            {
+                profitNumber += 5 * multicalc;
+            }
+            else if (item.GetComponent<SpriteRenderer>().enabled && item.GetComponent<SpriteRenderer>().color != Color.white)
+            {
+                profitNumber += 10 * multicalc;
+
+            }
+
+        }
+
+
+        textoProfit.text = "Profit: +$" + profitNumber.ToString();
+
+    }
+
     public void SellStacks()
     {
+        multiplierCalculator = iStackNumber;
+        Debug.Log("istacknumber: " + iStackNumber);
+        Debug.Log("multiplierCalculator: " + multiplierCalculator);
+
+
+        if (multiplierCalculator >= 1 && multiplierCalculator <= 19)
+        {
+            multiplierSeller = 1;
+
+        }
+        else if (multiplierCalculator > 19 && multiplierCalculator <= 38)
+        {
+            multiplierSeller = 2;
+
+        }
+        else if (multiplierCalculator > 38 && multiplierCalculator <= 57)
+        {
+            multiplierSeller = 3;
+
+        }
+        else if (multiplierCalculator > 57 && multiplierCalculator <= 76)
+        {
+            multiplierSeller = 4;
+
+        }
+        else if (multiplierCalculator > 76 && multiplierCalculator < 95)
+        {
+            multiplierSeller = 5;
+
+        }
+        else if (multiplierCalculator == 95)
+        {
+            multiplierSeller = 10;
+
+        }
+
+        Debug.Log("multiplierSeller: " + multiplierSeller);
+
+
         if (iStackNumber >= 95)
         {
             FindObjectOfType<AudioManager>().Play("sellButton", 1);
@@ -244,7 +346,7 @@ public class stackController : MonoBehaviour
 
                 storeController.GetComponent<StoreController>().initialMoney = (int)storeController.GetComponent<StoreController>().currentMoney;
 
-                storeController.GetComponent<StoreController>().money += 5;
+                storeController.GetComponent<StoreController>().money += 5* multiplierSeller;
             }
             else
             {
@@ -252,7 +354,7 @@ public class stackController : MonoBehaviour
 
                 storeController.GetComponent<StoreController>().initialMoney = (int)storeController.GetComponent<StoreController>().currentMoney;
 
-                storeController.GetComponent<StoreController>().money += 10;
+                storeController.GetComponent<StoreController>().money += 10* multiplierSeller;
             }
 
             //Debug.Log("pito stacknumber value " + iStackNumber);

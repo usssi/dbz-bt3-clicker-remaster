@@ -16,7 +16,7 @@ public class pauseController : MonoBehaviour
 
     public Button firstSelectedButton;
 
-    private bool isCanvasOn;
+    public bool isCanvasOn;
 
     PlayerIndex playerIndex;
     GamePadState state;
@@ -139,7 +139,10 @@ public class pauseController : MonoBehaviour
                 }
 
             }
+            cameraObject.GetComponent<cameraShake>().enabled = false;
+
         }
+
 
 
     }
@@ -166,12 +169,16 @@ public class pauseController : MonoBehaviour
                 Time.timeScale = 0;
 
 
-                playerObj.SetActive(false);
+                //playerObj.SetActive(false);
+                playerObj.GetComponent<platosController>().enabled = false;
+                playerObj.GetComponent<stackControllerPrueba>().enabled = false;
+                playerObj.GetComponent<gokuPrueba>().enabled = false;
+
 
                 gamepadControllerObj.GetComponent<gamepadController>().vibraD = 0;
                 gamepadControllerObj.GetComponent<gamepadController>().vibraI = 0;
 
-                gamepadControllerObj.GetComponent<gamepadController>().canVibrate = false;
+                //gamepadControllerObj.GetComponent<gamepadController>().canVibrate = false;
 
                 comboController.GetComponent<comboController>().isPaused = true;
 
@@ -199,20 +206,22 @@ public class pauseController : MonoBehaviour
             //pauseCanvas.SetActive(false);
             isCanvasOn = false;
             Time.timeScale = 1;
-            playerObj.SetActive(true);
+
+            //playerObj.SetActive(true);
+            playerObj.GetComponent<platosController>().enabled = true;
+            playerObj.GetComponent<stackControllerPrueba>().enabled = true;
+            playerObj.GetComponent<gokuPrueba>().enabled = true;
 
             gamepadControllerObj.GetComponent<gamepadController>().vibraD = 0.5f;
             gamepadControllerObj.GetComponent<gamepadController>().vibraI = 0.5f;
 
-            gamepadControllerObj.GetComponent<gamepadController>().canVibrate = true;
+            //gamepadControllerObj.GetComponent<gamepadController>().canVibrate = true;
 
             comboController.GetComponent<comboController>().isPaused = false;
 
             ereele.GetComponent<shakerScript>().magnitudeX = 2;
             ereele.GetComponent<shakerScript>().magnitudeY = 2;
 
-
-            cameraObject.GetComponent<cameraShake>().enabled = true;
 
             cameraObject.GetComponent<cameraShake>().enabled = true;
             cameraObject.GetComponent<changeBG>().enabled = true;

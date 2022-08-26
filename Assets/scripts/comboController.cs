@@ -63,10 +63,10 @@ public class comboController : MonoBehaviour
     public GameObject inpuTExt;
     public GameObject comboFinalNUmber;
 
+    public GameObject stackRealController;
+
 
     public bool autoCombo;
-
-
 
 
     void Start()
@@ -88,6 +88,7 @@ public class comboController : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("is paused: " + isPaused);
         if (comboCanBeActivated)
         {
             if (fillAmount > 0)
@@ -174,7 +175,7 @@ public class comboController : MonoBehaviour
 
         if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
         {
-            if (!isPaused)
+            if (!isPaused && stackRealController.GetComponent<stackController>().isSelling == false)
             {
                 fillAmount += fillerCounter;
             }

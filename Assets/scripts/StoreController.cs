@@ -47,7 +47,6 @@ public class StoreController : MonoBehaviour
     private int precioTimerMulti;
     private int precioShinyMulti;
 
-
     public Button firstSelectedButton;
 
     public TextMeshProUGUI precioXxText;
@@ -72,6 +71,12 @@ public class StoreController : MonoBehaviour
     public GameObject particulaButton;
 
     public GameObject storecanvas2;
+
+    public Image iconMulti;    
+    public Image iconTime;
+    public Image iconShiny;
+
+    public GameObject stackController;
 
     void Start()
     {
@@ -136,7 +141,7 @@ public class StoreController : MonoBehaviour
             storeOn = true;
             playerController.SetActive(false);
             comboController.GetComponent<comboController>().isPaused = true;
-            gamepadController.GetComponent<gamepadController>().canVibrate = false;
+            //gamepadController.GetComponent<gamepadController>().canVibrate = false;
             camController.GetComponent<zoomController>().isInStore = true;
             camController.GetComponent<changeBG>().isInStore = true;
 
@@ -155,7 +160,6 @@ public class StoreController : MonoBehaviour
         if (prevState.Buttons.Y == ButtonState.Released && state.Buttons.Y == ButtonState.Pressed)
         {
             yPressed = true;
-
         }
 
         if (prevState.Buttons.Y == ButtonState.Pressed && state.Buttons.Y == ButtonState.Released)
@@ -168,6 +172,10 @@ public class StoreController : MonoBehaviour
             if (prevState.Buttons.X == ButtonState.Released && state.Buttons.X == ButtonState.Pressed)
             {
                 MoneyUP();
+            }
+            if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
+            {
+                MoneyZero();
             }
         }
 
@@ -199,15 +207,14 @@ public class StoreController : MonoBehaviour
         else
         {
             precioXxText.color = Color.red;
-
         }
-
 
     }
 
     public void StoreToggle()
     {
-        if (storeOn == false)
+        if (storeOn == false && comboController.GetComponent<comboController>().comboCanBeActivated && 
+            !stackController.GetComponent<stackController>().isSelling)
         {
             firstSelectedButton.Select();
             storeCanvas.SetActive(true);
@@ -215,9 +222,13 @@ public class StoreController : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("storeOpen", 1f);
             playerController.SetActive(false);
             comboController.GetComponent<comboController>().isPaused = true;
-            gamepadController.GetComponent<gamepadController>().canVibrate = false;
+            //gamepadController.GetComponent<gamepadController>().canVibrate = false;
             camController.GetComponent<zoomController>().isInStore = true;
             camController.GetComponent<changeBG>().isInStore = true;
+
+            camController.GetComponent<cameraShake>().enabled = false;
+            camController.GetComponent<changeBG>().enabled = false;
+            camController.GetComponent<zoomController>().enabled = false;
 
             if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
             {
@@ -228,6 +239,7 @@ public class StoreController : MonoBehaviour
 
             storecanvas2.GetComponent<Animator>().SetBool("storeisopen", false);
 
+            stackController.GetComponent<stackController>().CalculaordeProfit();
 
         }
         else if (storeOn)
@@ -244,6 +256,10 @@ public class StoreController : MonoBehaviour
             camController.GetComponent<zoomController>().isInStore = false;
             camController.GetComponent<changeBG>().isInStore = false;
 
+            camController.GetComponent<cameraShake>().enabled = true;
+            camController.GetComponent<changeBG>().enabled = true;
+            camController.GetComponent<zoomController>().enabled = true;
+
             storecanvas2.GetComponent<Animator>().speed = 3;
 
             storecanvas2.GetComponent<Animator>().SetBool("storeisopen", true);
@@ -252,7 +268,6 @@ public class StoreController : MonoBehaviour
         }
 
     }
-
 
     public void StoreStackShiny()
     {
@@ -308,6 +323,8 @@ public class StoreController : MonoBehaviour
             shinytext.color = Color.grey;
             shinyinfo.color = Color.grey;
 
+            iconShiny.color = Color.gray;
+
         }
     }
 
@@ -332,7 +349,7 @@ public class StoreController : MonoBehaviour
             money = money - precioTimer;
 
             precioTimer += precioTimerMulti;
-            precioTimerMulti += 50;
+            precioTimerMulti += 100;
 
             comboController.GetComponent<comboController>().minimunFillTime += .06f;
 
@@ -356,8 +373,6 @@ public class StoreController : MonoBehaviour
             colors.pressedColor = Color.red;
             botonDuration.colors = colors;
 
-
-
         }
 
         if (comboController.GetComponent<comboController>().duration == maxDuration)
@@ -369,6 +384,8 @@ public class StoreController : MonoBehaviour
 
             timetext.color = Color.grey;
             timeinfo.color = Color.grey;
+
+            iconTime.color = Color.gray;
 
         }
 
@@ -463,10 +480,12 @@ public class StoreController : MonoBehaviour
             firstSelectedButton.Select();
             multitext.color = Color.grey;
             multiinfo.color = Color.grey;
+
+            iconMulti.color = Color.gray;
+
         }
 
     }
-
 
     public void MoneyUP()
     {
@@ -477,10 +496,18 @@ public class StoreController : MonoBehaviour
         money += 9999;
     }
 
+    public void MoneyZero()
+    {
+        initialMoney = (int)currentMoney;
+
+        FindObjectOfType<AudioManager>().Play("sellButton", 1);
+
+        money = 0;
+    }
+
     public void CloseStore()
     {
         storeCanvas.SetActive(false);
-
     }
 
     public void TimeAnimation()
@@ -496,7 +523,6 @@ public class StoreController : MonoBehaviour
         {
             lerpedAnimationTimer = 1;
             timeAnimationBool = false;
-
         }
     }
 
@@ -513,7 +539,6 @@ public class StoreController : MonoBehaviour
         {
             lerpedAnimationMultiplier = 1;
             multiAnimationBool = false;
-
         }
     }
 

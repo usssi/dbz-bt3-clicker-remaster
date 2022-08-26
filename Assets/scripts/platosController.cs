@@ -11,18 +11,9 @@ public class platosController : MonoBehaviour
 
     private int numeroPlato = 0;
 
-    public GameObject plato1;
-    public GameObject plato2;
-    public GameObject plato3;
-    public GameObject plato4;
-    public GameObject plato5;
-    public GameObject plato6;
-    public GameObject plato7;
-    public GameObject plato8;
-    public GameObject plato9;
-    public GameObject plato10;
-
-    public GameObject platoDefinitivo;
+    public SpriteRenderer platoDefinitivo;
+    public Sprite[] platosArray;
+    private int platoArrayCount;
 
     private float pitchPlus = .1f;
 
@@ -36,366 +27,198 @@ public class platosController : MonoBehaviour
 
     public int inputcount;
 
+    private bool bool1;
+    private bool bool2;
+
     private void Start()
     {
-
+        bool1 = true;
     }
+
 
     void Update()
     {
         prevState = state;
         state = GamePad.GetState(playerIndex);
 
+        numeroPlato = FindObjectOfType<stackControllerPrueba>().numeroStack;
+
         if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
         {
             if (numeroPlato >= 0 && numeroPlato <= 58)
             {
-                numeroPlato += inputPlus;
+                //numeroPlato += inputPlus;
                 inputcount += inputPlus;
-
-
             }
             else if (numeroPlato >= 59)
             {
-                numeroPlato += inputPlus;
+                //numeroPlato += inputPlus;
                 numeroPlato = 0;
             }
 
-
-            switch (numeroPlato)
-            {
-                case 0:
-                    Plato0();
-                    break;
-
-                case 6:
-                    Plato1();
-                    break;
-
-                case 6 * 2:
-                    Plato2();
-                    break;
-
-                case 6 * 3:
-                    Plato3();
-                    break;
-
-                case 6 * 4:
-                    Plato4();
-                    break;
-
-                case 6 * 5:
-                    Plato5();
-                    break;
-
-                case 6 * 6:
-                    Plato6();
-                    break;
-
-                case 6 * 7:
-                    Plato7();
-                    break;
-
-                case 6 * 8:
-                    Plato8();
-                    break;
-
-                case 6 * 9:
-                    Plato9();
-                    break;
-
-                case 6 * 10:
-                    Plato10();
-                    break;
-
-                default:
-                    break;
-            }
         }
 
+        if (numeroPlato >= 0 * 1 && numeroPlato < 6 * 1)
+        {
+            platoArrayCount = 0;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            bool1 = false;
+            bool2 = true;
+        }
+        else if (numeroPlato >= 6 * 1 && numeroPlato < 6 * 2 && bool2)
+        {
+            platoArrayCount = 1;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(0);
+            bool1 = true;
+            bool2 = false;
+        }
+        else if (numeroPlato >= 6 * 2 && numeroPlato < 6 * 3 && bool1)
+        {
+            platoArrayCount = 2;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus);
+            bool1 = false;
+            bool2 = true;
+        }
+        else if (numeroPlato >= 6 * 3 && numeroPlato < 6 * 4 && bool2)
+        {
+            platoArrayCount = 3;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus*2);
+            bool1 = true;
+            bool2 = false;
+        }
+        else if (numeroPlato >= 6 * 4 && numeroPlato < 6 * 5 && bool1)
+        {
+            platoArrayCount = 4;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus*3);
+            bool1 = false;
+            bool2 = true;
+        }
+        else if (numeroPlato >= 6 * 5 && numeroPlato < 6 * 6 && bool2)
+        {
+            platoArrayCount = 5;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus * 4);
+            bool1 = true;
+            bool2 = false;
+        }
+        else if (numeroPlato >= 6 * 6 && numeroPlato < 6 * 7 && bool1)
+        {
+            platoArrayCount = 6;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus * 5);
+            bool1 = false;
+            bool2 = true;
+        }
+        else if (numeroPlato >= 6 * 7 && numeroPlato < 6 * 8 && bool2)
+        {
+            platoArrayCount = 7;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus * 6);
+            bool1 = true;
+            bool2 = false;
+        }
+        else if (numeroPlato >= 6 * 8 && numeroPlato < 6 * 9 && bool1)
+        {
+            platoArrayCount = 8;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus * 7);
+            bool1 = false;
+            bool2 = true;
+        }
+        else if (numeroPlato >= 6 * 9 && numeroPlato < 6 * 10 && bool2)
+        {
+            platoArrayCount = 9;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus * 8);
+            bool1 = true;
+            bool2 = false;
+        }
+        else if (numeroPlato >= 6 * 10 && bool1)
+        {
+            platoArrayCount = 10;
+            platoDefinitivo.sprite = platosArray[platoArrayCount];
+            PlaySoundPitched(pitchPlus * 9);
+            bool1 = false;
+            bool2 = true;
+        }
     }
 
-    void Plato0()
-    {
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato1()
-    {
-        PlaySoundPitched(0);
-
-        plato1.SetActive(true);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato2()
-    {
-        PlaySoundPitched(pitchPlus);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(true);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato3()
-    {
-        PlaySoundPitched(pitchPlus*2);
-
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(true);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato4()
-    {
-        PlaySoundPitched(pitchPlus * 3);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(true);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato5()
-    {
-        PlaySoundPitched(pitchPlus * 4);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(true);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato6()
-    {
-        PlaySoundPitched(pitchPlus * 5);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(true);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato7()
-    {
-        PlaySoundPitched(pitchPlus * 6);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(true);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato8()
-    {
-        PlaySoundPitched(pitchPlus * 7);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(true);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato9()
-    {
-        PlaySoundPitched(pitchPlus * 8);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(true);
-
-        plato10.SetActive(false);
-
-    }
-    void Plato10()
-    {
-        PlaySoundPitched(pitchPlus * 9);
-
-        plato1.SetActive(false);
-
-        plato2.SetActive(false);
-
-        plato3.SetActive(false);
-
-        plato4.SetActive(false);
-
-        plato5.SetActive(false);
-
-        plato6.SetActive(false);
-
-        plato7.SetActive(false);
-
-        plato8.SetActive(false);
-
-        plato9.SetActive(false);
-
-        plato10.SetActive(true);
-
-    }
+    //void Plato0()
+    //{
+    //    platoArrayCount = 0;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+
+    //}
+    //void Plato1()
+    //{
+    //    PlaySoundPitched(0);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+
+    //}
+    //void Plato2()
+    //{
+    //    PlaySoundPitched(pitchPlus);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato3()
+    //{
+    //    PlaySoundPitched(pitchPlus * 2);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato4()
+    //{
+    //    PlaySoundPitched(pitchPlus * 3);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato5()
+    //{
+    //    PlaySoundPitched(pitchPlus * 4);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato6()
+    //{
+    //    PlaySoundPitched(pitchPlus * 5);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato7()
+    //{
+    //    PlaySoundPitched(pitchPlus * 6);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato8()
+    //{
+    //    PlaySoundPitched(pitchPlus * 7);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato9()
+    //{
+    //    PlaySoundPitched(pitchPlus * 8);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
+    //void Plato10()
+    //{
+    //    PlaySoundPitched(pitchPlus * 9);
+    //    platoArrayCount += 1;
+    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
+    //}
 
     void PlaySoundPitched(float pitch)
     {
         FindObjectOfType<AudioManager>().Play("plato", 1 + pitch);
     }
-
 
     public void OnButtonActivatePowerUpPlatos(int duracion, int intensidad)
     {
@@ -405,13 +228,11 @@ public class platosController : MonoBehaviour
             Invoke("PowerUpDisable", duracion+.1f);
             buttonCanBeActivated = false;
             inputcount = 0;
-
         }
         else
         {
             return;
         }
-
     }
 
     private void PowerUpDisable()
@@ -419,9 +240,5 @@ public class platosController : MonoBehaviour
         inputPlus = 1;
         buttonCanBeActivated = true;
         inputcount = 0;
-
     }
-
-
-
 }

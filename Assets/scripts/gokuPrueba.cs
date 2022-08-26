@@ -56,6 +56,7 @@ public class gokuPrueba : MonoBehaviour
                     goku1.SetActive(false);
                     goku2.SetActive(true);
                 }
+
                 FindObjectOfType<AudioManager>().Play("click_down", Random.Range( 0.7f , 1.3f));
                 if (!boostIsOn)
                 {

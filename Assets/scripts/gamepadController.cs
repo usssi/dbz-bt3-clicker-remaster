@@ -35,6 +35,8 @@ public class gamepadController : MonoBehaviour
     private bool buttonCanBeActivated;
     private int inputPlus;
 
+    public GameObject stackController;
+
     private void Awake()
     {
         controls = new InputMaster();
@@ -55,20 +57,18 @@ public class gamepadController : MonoBehaviour
             SceneManager.LoadScene("goku");
         }
 
-
         prevState = state;
         state = GamePad.GetState(playerIndex);
 
-        if (canVibrate)
+        if (cameraShake.GetComponent<cameraShake>().shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
         {
             if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
             {
                 StartCoroutine(cameraShake.Shake(duration * magDurVal, magnitude * magDurVal));
                 magDurVal += magDurPlusser*inputPlus;
-
             }
         }
-        else if (!canVibrate)
+        else
         {
             StopAllCoroutines();
         }

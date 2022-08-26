@@ -13,9 +13,7 @@ public class controllerPauseCanvasSize : MonoBehaviour
 
     private void Start()
     {
-
         gameObject.SetActive(false);
-
     }
 
     private void OnEnable()
@@ -40,6 +38,24 @@ public class controllerPauseCanvasSize : MonoBehaviour
 
         Invoke("CloseUI", .3f);
 
+    }
+
+    public void GrowUI()
+    {
+        panel.GetComponent<Animator>().SetBool("growUI", true);
+        panel.GetComponent<Animator>().SetBool("downUI", false);
+    }
+
+    public void DownUI()
+    {
+        panel.GetComponent<Animator>().SetBool("growUI", false);
+        panel.GetComponent<Animator>().SetBool("downUI", true);
+    }
+
+    public void OriginalUI()
+    {
+        panel.GetComponent<Animator>().SetBool("growUI", false);
+        panel.GetComponent<Animator>().SetBool("downUI", false);
     }
 
     void CloseUI()

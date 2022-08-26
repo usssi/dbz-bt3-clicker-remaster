@@ -21,7 +21,7 @@ public class stackControllerPrueba : MonoBehaviour
 
     private bool stackOne;
 
-    private int numeroStack;
+    public int numeroStack;
 
     private float pitch = 0;
     private float pitchPlus = .05f;
@@ -53,16 +53,12 @@ public class stackControllerPrueba : MonoBehaviour
             if (numeroStack >= 0 && numeroStack <= 58)
             {
                 numeroStack += inputPlus;
-                //print(numeroStack);
             }
             else if (numeroStack >= 59)
             {
                 pitch += pitchPlus;
-
                 StackOne();
                 numeroStack = 0;
-                //stackOne = true;
-
             }
         }
 
