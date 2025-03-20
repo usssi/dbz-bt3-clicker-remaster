@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class pauseController : MonoBehaviour
 {
-    //public GameObject pauseCanvas;
     public GameObject playerObj;
     public GameObject gamepadControllerObj;
     public GameObject cameraObject;
@@ -43,15 +42,12 @@ public class pauseController : MonoBehaviour
 
     void Start()
     {
-        //pauseCanvas.SetActive(false);
         isCanvasOn = false;
         canBePaused = true;
         canGoUp = true;
         timePingponged = 0;
 
         pene1 = titulo.transform.localScale;
-
-
     }
 
     private void Update()
@@ -68,7 +64,6 @@ public class pauseController : MonoBehaviour
                 canGoDown = true;
                 timePingponged = 1;
                 canGoUp = false;
-
             }
         }
 
@@ -137,15 +132,11 @@ public class pauseController : MonoBehaviour
                 {
                     buttonController.GetComponent<buttonController>().ButtonOptions();
                 }
-
             }
             cameraObject.GetComponent<cameraShake>().enabled = false;
-
         }
-
-
-
     }
+
     public void ButtonEnableDisableCanvas()
     {
         if (isCanvasOn == false)

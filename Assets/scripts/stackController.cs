@@ -34,9 +34,6 @@ public class stackController : MonoBehaviour
 
     private void Start()
     {
-        //stackList = GameObject.FindGameObjectsWithTag("stack");
-        //print(stackList.Length);
-
         foreach (var item in stackList)
         {
             item.GetComponent<SpriteRenderer>().enabled = false;
@@ -48,9 +45,6 @@ public class stackController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("pito stacknumber value " + iStackNumber);
-        //Debug.Log("poto isselling " + isSelling);
-
 
         //autosell cuando se llega a 95 stacks activos
         if (iStackNumber>=95)
@@ -99,78 +93,6 @@ public class stackController : MonoBehaviour
             }
         }
 
-        #region oldcode
-        //print(stackList.Length);
-
-        //time it takes to sell stack depending on amount of stacks
-        //if (stackList.Length>=0 && stackList.Length<=19)
-        //{
-        //    waitForThis = 0.0005f;
-        //}
-        //if (stackList.Length > 19 && stackList.Length <= 38)
-        //{
-        //    waitForThis = 0.0004f;
-        //}
-        //if (stackList.Length > 38 && stackList.Length <= 57)
-        //{
-        //    waitForThis = 0.0003f;
-        //}
-        //if (stackList.Length > 57 && stackList.Length <= 76)
-        //{
-        //    waitForThis = 0.0002f;
-        //}
-
-        //cuando la lista llega a 0 pone el zoom de la camara en normal
-        //if (isSelling)
-        //{
-        //    if (stackList.Length>0)
-        //    {
-
-        //    }
-        //    if (stackList.Length == 0)
-        //    {
-        //        cameraObject.GetComponent<zoomController>().CamDefault();
-
-        //        isSelling = false;
-        //    }
-        //}
-        #endregion
-
-        #region old code
-        ///////////este codigo vende automaticamente cuando la lista llega a 95 y le quita el control al player //deprecated
-        //if (stackList.Length >= 95)
-        //{
-        //    SellStacks();
-        //    comboController.GetComponent<comboController>().isPaused = true;
-        //    gamepadController.GetComponent<gamepadController>().canVibrate = false;
-        //    camController.GetComponent<zoomController>().isInStore = true;
-        //    camController.GetComponent<changeBG>().isInStore = true;
-        //}
-
-        ////////////si la lista tiene o llega a 0 le devuelve el control al player // deprecated
-        //if (stackList.Length == 0 )
-        //{
-        //    playerObj.SetActive(true);
-        //    playerObj.GetComponent<stackControllerPrueba>().positionOffsetX = 0;
-        //    playerObj.GetComponent<stackControllerPrueba>().positionOffsetY = 0;
-        //    comboController.GetComponent<comboController>().isPaused = false;
-        //    gamepadController.GetComponent<gamepadController>().canVibrate = true;
-        //    camController.GetComponent<zoomController>().isInStore = false;
-        //    camController.GetComponent<changeBG>().isInStore = false;
-        //    i = 0;
-        //}
-
-        //this activates zoomercontroller ervery time an stack is created under 19 //deprecated
-        //if (stackList.Length > i && i<19)
-        //{
-        //    i = stackList.Length;
-        //    //Debug.Log(i);
-        //    cameraObject.GetComponent<zoomController>().ZoomerController();
-        //}
-        #endregion
-
-        //Debug.Log("istacknumber: " + iStackNumber);
-
     }
 
     public void Stackeador(bool isItDorado)
@@ -188,9 +110,6 @@ public class stackController : MonoBehaviour
         stackList[iStackNumber].GetComponent<SpriteRenderer>().enabled = true;
 
         iStackNumber++;
-
-        //Debug.Log("stackea " + iStackNumber);
-        //Debug.Log("is it dorado? " + isItDorado);
     }
 
     public void CalculaordeProfit()
@@ -239,14 +158,10 @@ public class stackController : MonoBehaviour
             else if (item.GetComponent<SpriteRenderer>().enabled && item.GetComponent<SpriteRenderer>().color != Color.white)
             {
                 profitNumber += 10 * multicalc;
-
             }
-
         }
 
-
         textoProfit.text = "Profit: +$" + profitNumber.ToString();
-
     }
 
     public void SellStacks()
@@ -254,7 +169,6 @@ public class stackController : MonoBehaviour
         multiplierCalculator = iStackNumber;
         Debug.Log("istacknumber: " + iStackNumber);
         Debug.Log("multiplierCalculator: " + multiplierCalculator);
-
 
         if (multiplierCalculator >= 1 && multiplierCalculator <= 19)
         {
@@ -288,7 +202,6 @@ public class stackController : MonoBehaviour
         }
 
         Debug.Log("multiplierSeller: " + multiplierSeller);
-
 
         if (iStackNumber >= 95)
         {
@@ -357,55 +270,8 @@ public class stackController : MonoBehaviour
                 storeController.GetComponent<StoreController>().money += 10* multiplierSeller;
             }
 
-            //Debug.Log("pito stacknumber value " + iStackNumber);
             yield return new WaitForSeconds(.1f);
         }
 
     }
-
-    #region old code
-
-    //old sell stacks function, destruye stacks de la lista empezando por el final. 
-    //public void SellStacks()
-    //{
-    //    if (stackList.Length >= 95)
-    //    {
-    //        FindObjectOfType<AudioManager>().Play("sellButton", 1);
-    //        Array.Reverse(stackList, 0, stackList.Length);
-    //        StartCoroutine(DestroyStacks());
-    //        playerObj.SetActive(false);
-    //        isSelling = true;
-    //        playerObj.GetComponent<stackControllerPrueba>().DefaultSpawnerPosition();
-    //    }
-    //    else if (stackList.Length>0 && stackList.Length < 94)
-    //    {
-    //        FindObjectOfType<AudioManager>().Play("sellButton", 1);
-    //        Array.Reverse(stackList, 0, stackList.Length);
-    //        StartCoroutine(DestroyStacks());
-    //        playerObj.SetActive(false);
-    //        storeController.GetComponent<StoreController>().StoreToggle();
-    //        isSelling = true;
-    //        playerObj.GetComponent<stackControllerPrueba>().DefaultSpawnerPosition();
-    //    }
-    //    else
-    //    {
-    //        FindObjectOfType<AudioManager>().Play("buttonDenied", 1);
-    //    }
-    //}
-
-
-    //destruir stacks consume memoria //deprecated
-    //IEnumerator DestroyStacks()
-    //{
-    //    foreach (var item in stackList)
-    //    {
-    //        for (int i = 0; i < stackList.Length; i++)
-    //        {
-    //            Destroy(item);
-    //            yield return new WaitForSeconds(waitForThis);
-    //        }
-    //    }
-    //}
-    #endregion
-
 }

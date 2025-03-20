@@ -5,12 +5,8 @@ using XInputDotNetPure;
 using UnityEngine.UI;
 using TMPro;
 
-public class comboController : MonoBehaviour
+public class comboController : GamepadInputHandler // Inherit from GamepadInputHandler
 {
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
-
     private bool r1 = false;
     private bool l1 = false;
     private bool rLComboPress;
@@ -23,7 +19,6 @@ public class comboController : MonoBehaviour
     public GameObject boostText;
     public GameObject aAnimationButton;
     public GameObject inputCounterImage;
-
 
     public GameObject comboData;
 
@@ -39,7 +34,6 @@ public class comboController : MonoBehaviour
     public GameObject ComboBarFill;
     public GameObject timeBarFill;
     public GameObject rayios;
-
 
     public float fillAmount;
     public float fillerCounter;
@@ -65,17 +59,14 @@ public class comboController : MonoBehaviour
 
     public GameObject stackRealController;
 
-
     public bool autoCombo;
-
 
     void Start()
     {
         comboCanBeActivated = true;
         ComboBarFill.GetComponent<Image>().fillAmount = fillAmount;
 
-        //comboData.SetActive(false);
-        durationTimerText = duration+1;
+        durationTimerText = duration + 1;
 
         rayios.SetActive(false);
         boostText.SetActive(false);
@@ -83,12 +74,12 @@ public class comboController : MonoBehaviour
         inputCounterImage.SetActive(false);
 
         comboFinalNUmber.SetActive(false);
-
     }
 
-    void Update()
+    protected override void Update() // Override the base class Update method
     {
-        //Debug.Log("is paused: " + isPaused);
+        base.Update(); // Call the base class Update method to ensure input handling works
+
         if (comboCanBeActivated)
         {
             if (fillAmount > 0)
@@ -96,37 +87,30 @@ public class comboController : MonoBehaviour
                 fillAmount -= .1f * Time.deltaTime;
             }
         }
-       
-        if (fillAmount>1.1)
+
+        if (fillAmount > 1.1)
         {
             fillAmount = 1;
         }
-        if (fillAmount<0)
+        if (fillAmount < 0)
         {
             fillAmount = 0;
         }
 
-
-        //input controller R1+L1
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
-
-        if (prevState.Buttons.RightShoulder == ButtonState.Released && state.Buttons.RightShoulder == ButtonState.Pressed)
+        // Handle R1 and L1 inputs
+        if (IsRightShoulderPressed())
         {
             r1 = true;
         }
-
-        if (prevState.Buttons.RightShoulder == ButtonState.Pressed && state.Buttons.RightShoulder == ButtonState.Released)
+        if (IsRightShoulderReleased())
         {
             r1 = false;
         }
-
-        if (prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed)
+        if (IsLeftShoulderPressed())
         {
             l1 = true;
         }
-
-        if (prevState.Buttons.LeftShoulder == ButtonState.Pressed && state.Buttons.LeftShoulder == ButtonState.Released)
+        if (IsLeftShoulderReleased())
         {
             l1 = false;
         }
@@ -137,92 +121,63 @@ public class comboController : MonoBehaviour
             {
                 rayios.SetActive(true);
                 maxPower.SetActive(true);
-
-
                 ereele.SetActive(true);
-                if (l1 && r1)
-                {
-                    durationTimerText = duration+1;
 
-                    rLComboPress = true;
-                    DoShit();
-                }
-
-                if (autoCombo)
+                if ((l1 && r1) || autoCombo)
                 {
                     durationTimerText = duration + 1;
-
                     rLComboPress = true;
                     DoShit();
-
                 }
             }
             else if (fillAmount < .99)
             {
                 rayios.SetActive(false);
                 maxPower.SetActive(false);
-
-
                 ereele.SetActive(false);
-
-            }
-
-        }
-      
-
-        ///////////////////////////////
-
-
-        if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
-        {
-            if (!isPaused && stackRealController.GetComponent<stackController>().isSelling == false)
-            {
-                fillAmount += fillerCounter;
             }
         }
 
         ColorChanger();
 
-
         float minChanceGold = (((float)stackController.GetComponent<stackControllerPrueba>().minChanceGold * -1) + 100) / 100;
-        if (lerpedshit<minChanceGold)
+        if (lerpedshit < minChanceGold)
         {
-            lerpedshit += minChanceGold * Time.deltaTime*3;
-            if (lerpedshit>=minChanceGold)
+            lerpedshit += minChanceGold * Time.deltaTime * 3;
+            if (lerpedshit >= minChanceGold)
             {
                 lerpedshit = minChanceGold;
             }
         }
         doradoBarFill.GetComponent<Image>().fillAmount = lerpedshit;
 
-
         inpuTExt.GetComponent<TextMeshProUGUI>().text = platosContoller.GetComponent<platosController>().inputcount.ToString();
-
     }
 
+    protected override void OnButtonAPressed() // Implement the abstract method
+    {
+        if (!isPaused && stackRealController.GetComponent<stackController>().isSelling == false)
+        {
+            fillAmount += fillerCounter;
+        }
+    }
 
     private void FixedUpdate()
     {
-
         ComboBarFill.GetComponent<Image>().fillAmount = fillAmount;
-
 
         if (rLComboPress == true)
         {
             durationTimerText -= 1 * Time.deltaTime;
             shitTrue = true;
         }
-       
 
         comboData.GetComponent<TextMeshProUGUI>().text = "x" + intensidad;
-
 
         if (shitTrue)
         {
             timerFillAmount = Mathf.Lerp(minimunFillTime, 1, durationTimerText / (duration + 1));
-
             timeBarFill.GetComponent<Image>().fillAmount = timerFillAmount;
-
             comboData.GetComponent<TextMeshProUGUI>().colorGradientPreset = cyan;
         }
         else
@@ -230,7 +185,6 @@ public class comboController : MonoBehaviour
             timeBarFill.GetComponent<Image>().fillAmount = 1;
             comboData.GetComponent<TextMeshProUGUI>().colorGradientPreset = yellow;
         }
-
     }
 
     public void DoShit()
@@ -250,12 +204,11 @@ public class comboController : MonoBehaviour
 
         stackController.GetComponent<stackControllerPrueba>().OnButtonActivatePowerUpStack(duration, intensidad);
         platosContoller.GetComponent<platosController>().OnButtonActivatePowerUpPlatos(duration, intensidad);
-        changeBGContoller.GetComponent<changeBG>().ButtonPressMultiComboBGChange(duration, intensidad/2);
+        changeBGContoller.GetComponent<changeBG>().ButtonPressMultiComboBGChange(duration, intensidad / 2);
         changeBGContoller.GetComponent<zoomController>().ButtonPressMultiComboZoom(duration, intensidad);
         gamepadController.GetComponent<gamepadController>().OnButtonActivatePowerUpShaker(duration, intensidad);
 
         Invoke("StopDoingShit", duration);
-
     }
 
     private void StopDoingShit()
@@ -276,12 +229,11 @@ public class comboController : MonoBehaviour
         StartCoroutine(DoAThingOverTime(Color.white, Color.clear, 2));
 
         comboBarFondo.GetComponent<Image>().color = Color.white;
-
     }
 
-    void ColorChanger() 
+    void ColorChanger()
     {
-        Color fillColor = Color.Lerp(Color.green, Color.cyan, (fillAmount/maxFill));
+        Color fillColor = Color.Lerp(Color.green, Color.cyan, (fillAmount / maxFill));
         ComboBarFill.GetComponent<Image>().color = fillColor;
     }
 
@@ -297,4 +249,24 @@ public class comboController : MonoBehaviour
         comboFinalNUmber.SetActive(false);
     }
 
+    // Helper methods for input handling
+    private bool IsRightShoulderPressed()
+    {
+        return prevState.Buttons.RightShoulder == ButtonState.Released && state.Buttons.RightShoulder == ButtonState.Pressed;
+    }
+
+    private bool IsRightShoulderReleased()
+    {
+        return prevState.Buttons.RightShoulder == ButtonState.Pressed && state.Buttons.RightShoulder == ButtonState.Released;
+    }
+
+    private bool IsLeftShoulderPressed()
+    {
+        return prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed;
+    }
+
+    private bool IsLeftShoulderReleased()
+    {
+        return prevState.Buttons.LeftShoulder == ButtonState.Pressed && state.Buttons.LeftShoulder == ButtonState.Released;
+    }
 }

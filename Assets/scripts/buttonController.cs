@@ -5,9 +5,6 @@ using UnityEngine.Audio;
 using TMPro;
 using UnityEngine.UI;
 
-
-
-
 public class buttonController : MonoBehaviour
 {
     public GameObject cameraObject; 
@@ -149,7 +146,7 @@ public class buttonController : MonoBehaviour
             juiceToogleBool = false;
             FindObjectOfType<AudioManager>().Play("genericButtonOff", 1);
 
-            jugoText.GetComponent<TextMeshProUGUI>().text = "JUGON'T";
+            jugoText.GetComponent<TextMeshProUGUI>().text = "JUICEN'T";
 
 
 
@@ -162,7 +159,7 @@ public class buttonController : MonoBehaviour
 
             juiceToogleBool = true;
             FindObjectOfType<AudioManager>().Play("genericButtonOn", 1);
-            jugoText.GetComponent<TextMeshProUGUI>().text = "JUGO";
+            jugoText.GetComponent<TextMeshProUGUI>().text = "JUICE";
 
 
         }
@@ -203,7 +200,7 @@ public class buttonController : MonoBehaviour
             vibrateBool = false;
             gamepadController.GetComponent<gamepadController>().canVibrate = false;
 
-            vibrateText.GetComponent<TextMeshProUGUI>().text = "VIBRACION'T";
+            vibrateText.GetComponent<TextMeshProUGUI>().text = "RUMBLEN'T";
 
         }
         else if (vibrateBool == false)
@@ -217,7 +214,7 @@ public class buttonController : MonoBehaviour
 
 
 
-            vibrateText.GetComponent<TextMeshProUGUI>().text = "VIBRACION";
+            vibrateText.GetComponent<TextMeshProUGUI>().text = "RUMBLE";
 
         }
 
@@ -234,7 +231,7 @@ public class buttonController : MonoBehaviour
 
             soundOnOff = false;
 
-            sonidoText.GetComponent<TextMeshProUGUI>().text = "SONIDON'T";
+            sonidoText.GetComponent<TextMeshProUGUI>().text = "SOUNDN'T";
 
         }
         else if (soundOnOff == false)
@@ -245,7 +242,7 @@ public class buttonController : MonoBehaviour
             soundOnOff = true;
             FindObjectOfType<AudioManager>().Play("genericButtonOn", 1);
 
-            sonidoText.GetComponent<TextMeshProUGUI>().text = "SONIDO";
+            sonidoText.GetComponent<TextMeshProUGUI>().text = "SOUND";
 
 
         }

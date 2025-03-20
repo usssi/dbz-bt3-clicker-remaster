@@ -5,13 +5,8 @@ using UnityEngine.InputSystem;
 using XInputDotNetPure;
 using UnityEngine.SceneManagement;
 
-
-
-public class gamepadController : MonoBehaviour
+public class gamepadController : GamepadInputHandler // Inherit from GamepadInputHandler
 {
-
-    InputMaster controls;
-
     public cameraShake cameraShake;
     public float duration = 0.02f;
     public float magnitude = 0.02f;
@@ -19,11 +14,6 @@ public class gamepadController : MonoBehaviour
     public float magDurPlusser = 0.02f;
     float magDurVal;
     public float resta;
-
-
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
 
     [Space]
     public float vibraDuration;
@@ -39,9 +29,6 @@ public class gamepadController : MonoBehaviour
 
     private void Awake()
     {
-        controls = new InputMaster();
-        controls.player.action.performed += PadActionA;
-
         vibraD = .5f;
         vibraI = .5f;
 
@@ -49,75 +36,57 @@ public class gamepadController : MonoBehaviour
         inputPlus = 1;
     }
 
-
-    private void Update()
+    protected override void Update() // Override the base class Update method
     {
+        base.Update(); // Call the base class Update method to ensure input handling works
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("goku");
         }
 
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
-
         if (cameraShake.GetComponent<cameraShake>().shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
         {
-            if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
+            if (IsButtonAPressed())
             {
                 StartCoroutine(cameraShake.Shake(duration * magDurVal, magnitude * magDurVal));
-                magDurVal += magDurPlusser*inputPlus;
+                magDurVal += magDurPlusser * inputPlus;
             }
         }
         else
         {
             StopAllCoroutines();
         }
-        
 
-        if (prevState.Buttons.A == ButtonState.Pressed && state.Buttons.A == ButtonState.Released)
+        if (IsButtonAReleased())
         {
             StopVibracion();
         }
-
 
         if (magDurVal < 1.5)
         {
             resta = 0.08f;
         }
-        if (magDurVal < 2)
+        if (magDurVal < 2 && magDurVal > 1.5)
         {
-            if (magDurVal > 1.5)
-            {
-                resta = 0.1f;
-            }
+            resta = 0.1f;
         }
-        if (magDurVal < 3)
+        if (magDurVal < 3 && magDurVal > 2.5)
         {
-            if (magDurVal > 2.5)
-            {
-                resta = 0.12f;
-            }
+            resta = 0.12f;
         }
-        if (magDurVal < 4)
+        if (magDurVal < 4 && magDurVal > 3.5)
         {
-            if (magDurVal > 3.5)
-            {
-                resta = 0.14f;
-
-            }
+            resta = 0.14f;
         }
         if (magDurVal > 4)
         {
             magDurVal = 4;
-
         }
-
-    
-
     }
 
     private void FixedUpdate()
-    {       
+    {
         if (magDurVal > 1)
         {
             magDurVal -= resta * inputPlus * Time.deltaTime;
@@ -126,24 +95,20 @@ public class gamepadController : MonoBehaviour
         {
             magDurVal = 1;
         }
-
     }
 
-
-
-    public void PadActionA(InputAction.CallbackContext context)
+    protected override void OnButtonAPressed() // Handle A button press
     {
-        Vibracion();
+        if (cameraShake.GetComponent<cameraShake>().shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
+        {
+            StartCoroutine(cameraShake.Shake(duration * magDurVal, magnitude * magDurVal));
+            magDurVal += magDurPlusser * inputPlus;
+        }
     }
 
-    private void OnEnable()
+    protected override void OnButtonAReleased() // Handle A button release
     {
-        controls.player.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.player.Disable();
+        StopVibracion();
     }
 
     private void Vibracion()
@@ -157,7 +122,6 @@ public class gamepadController : MonoBehaviour
         {
             StopVibracion();
         }
-        
     }
 
     private void StopVibracion()
@@ -177,13 +141,11 @@ public class gamepadController : MonoBehaviour
         {
             return;
         }
-
     }
 
     private void PowerUpDisable()
     {
         inputPlus = 1;
         buttonCanBeActivated = true;
-
     }
 }

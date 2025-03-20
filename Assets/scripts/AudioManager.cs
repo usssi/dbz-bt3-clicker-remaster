@@ -10,7 +10,6 @@ public class AudioManager : MonoBehaviour
     FindObjectOfType<AudioManager>().Play("",1f);
     */
 
-
     void Awake()
     {
         foreach (Sound s in sounds)
@@ -28,9 +27,7 @@ public class AudioManager : MonoBehaviour
 
         //print("audio manager woke up");
         FindObjectOfType<AudioManager>().Play("ruido", 1f);
-
     }
-
 
     public void Play(string name, float pitchTone)
     {
@@ -46,14 +43,11 @@ public class AudioManager : MonoBehaviour
         }
 
         s.source.Play();
-        //print("audio manager played" + name);
-
-
+        print("audio manager played" + name);
     }
 
     public void OnButtonSelect()
     {
         FindObjectOfType<AudioManager>().Play("buttonSelect", 1f);
-
     }
 }

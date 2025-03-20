@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
-public class zoomController : MonoBehaviour
+public class zoomController : GamepadInputHandler // Inherit from GamepadInputHandler
 {
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
+    private Vector3 camPositionDefault; // Default camera position
+    private Vector3 camPositionFinal; // Final camera position
 
-    private Vector3 camPositionDefault ; //al principio es -2.5, -1, 0
-    private Vector3 camPositionFinal; //al final es 0, 0, 0
+    private float camSizeDefault; // Default camera size
+    private float camSizeFinal; // Final camera size
 
-    private float camSizeDefault;
-    private float camSizeFinal;
-
-    private float time;
-    public float resta;
+    private float time; // Lerp progress
+    public float resta; // Speed of returning to default
 
     private bool buttonCanBeActivated;
     private int multiCombo;
@@ -24,7 +20,6 @@ public class zoomController : MonoBehaviour
     public bool isInStore;
 
     public Camera mainCamera;
-
 
     void Start()
     {
@@ -34,84 +29,60 @@ public class zoomController : MonoBehaviour
         camSizeDefault = 3.5f;
         camSizeFinal = 5f;
 
-        //Camera.main.orthographicSize;
-
         time = 0;
         resta = .05f;
 
         buttonCanBeActivated = true;
-
         multiCombo = 1;
-
     }
 
-    void Update()
+    protected override void OnButtonAPressed() // Handle A button press
     {
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
+        Debug.Log("button a");
 
-        if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
+        if (!isInStore)
         {
-            Debug.Log("button a");
-
-            if (isInStore==false)
-            {
-                time += .01f * multiCombo;
-                //ZoomerController(stackAmount);
-            }           
+            time += .01f * multiCombo;
         }
     }
 
     private void FixedUpdate()
     {
-
-        //restar a la variable t del lerp, lo que hace que la camara vuelva al tamaño inicial
+        // Gradually reduce the time value to return the camera to its default state
         if (time > 0)
         {
-            time -= resta*multiCombo*.7f * Time.deltaTime;
-
+            time -= resta * multiCombo * .7f * Time.deltaTime;
         }
         else if (time < 0)
         {
             time = 0;
         }
-        else if (time>1)
+        else if (time > 1)
         {
             time = 1;
         }
 
-        //aumentar el valor de la resta al valor lerp, para que mientras mas lejos este de la posicion inicial, mas rapido vuelva
+        // Adjust the speed of returning based on the current time value
         if (time < 0.25f)
         {
             resta = 0.05f;
         }
-        if (time < 0.5f)
+        if (time < 0.5f && time > 0.35f)
         {
-            if (time > 0.35f)
-            {
-                resta = 0.07f;
-            }
+            resta = 0.07f;
         }
-        if (time < 0.75f)
+        if (time < 0.75f && time > 0.65f)
         {
-            if (time > 0.65f)
-            {
-                resta = 0.09f;
-            }
+            resta = 0.09f;
         }
-        if (time < 0.9f)
+        if (time < 0.9f && time > 0.85f)
         {
-            if (time > 0.85f)
-            {
-                resta = 0.11f;
-
-            }
+            resta = 0.11f;
         }
 
-        //lerp la posicion de la camara entre la original y la final
+        // Lerp the camera's position and size
         transform.localPosition = Vector3.Lerp(camPositionDefault, camPositionFinal, time);
         mainCamera.orthographicSize = Mathf.Lerp(camSizeDefault, camSizeFinal, time);
-
     }
 
     public void ZoomerController()
@@ -125,7 +96,7 @@ public class zoomController : MonoBehaviour
     {
         if (buttonCanBeActivated)
         {
-            if (intensidad<=6)
+            if (intensidad <= 6)
             {
                 multiCombo = intensidad / 2;
             }

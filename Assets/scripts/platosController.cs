@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using XInputDotNetPure;
 
-
-public class platosController : MonoBehaviour
+public class platosController : GamepadInputHandler // Inherit from GamepadInputHandler
 {
-    //controla los platos de la mesa
-
+    // Controla los platos de la mesa
     private int numeroPlato = 0;
 
     public SpriteRenderer platoDefinitivo;
@@ -16,14 +13,8 @@ public class platosController : MonoBehaviour
     private int platoArrayCount;
 
     private float pitchPlus = .1f;
-
     private int inputPlus = 1;
-
     private bool buttonCanBeActivated = true;
-
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
 
     public int inputcount;
 
@@ -35,29 +26,25 @@ public class platosController : MonoBehaviour
         bool1 = true;
     }
 
-
-    void Update()
+    protected override void OnButtonAPressed() // Handle A button press
     {
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
-
         numeroPlato = FindObjectOfType<stackControllerPrueba>().numeroStack;
 
-        if (prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed)
+        if (numeroPlato >= 0 && numeroPlato <= 58)
         {
-            if (numeroPlato >= 0 && numeroPlato <= 58)
-            {
-                //numeroPlato += inputPlus;
-                inputcount += inputPlus;
-            }
-            else if (numeroPlato >= 59)
-            {
-                //numeroPlato += inputPlus;
-                numeroPlato = 0;
-            }
-
+            inputcount += inputPlus;
         }
+        else if (numeroPlato >= 59)
+        {
+            numeroPlato = 0;
+        }
+    }
 
+    protected override void Update() // Override the base class Update method
+    {
+        base.Update(); // Call the base class Update method to ensure input handling works
+
+        // Update the plate sprite based on numeroPlato
         if (numeroPlato >= 0 * 1 && numeroPlato < 6 * 1)
         {
             platoArrayCount = 0;
@@ -85,7 +72,7 @@ public class platosController : MonoBehaviour
         {
             platoArrayCount = 3;
             platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus*2);
+            PlaySoundPitched(pitchPlus * 2);
             bool1 = true;
             bool2 = false;
         }
@@ -93,7 +80,7 @@ public class platosController : MonoBehaviour
         {
             platoArrayCount = 4;
             platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus*3);
+            PlaySoundPitched(pitchPlus * 3);
             bool1 = false;
             bool2 = true;
         }
@@ -147,74 +134,6 @@ public class platosController : MonoBehaviour
         }
     }
 
-    //void Plato0()
-    //{
-    //    platoArrayCount = 0;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-
-    //}
-    //void Plato1()
-    //{
-    //    PlaySoundPitched(0);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-
-    //}
-    //void Plato2()
-    //{
-    //    PlaySoundPitched(pitchPlus);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato3()
-    //{
-    //    PlaySoundPitched(pitchPlus * 2);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato4()
-    //{
-    //    PlaySoundPitched(pitchPlus * 3);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato5()
-    //{
-    //    PlaySoundPitched(pitchPlus * 4);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato6()
-    //{
-    //    PlaySoundPitched(pitchPlus * 5);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato7()
-    //{
-    //    PlaySoundPitched(pitchPlus * 6);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato8()
-    //{
-    //    PlaySoundPitched(pitchPlus * 7);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato9()
-    //{
-    //    PlaySoundPitched(pitchPlus * 8);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-    //void Plato10()
-    //{
-    //    PlaySoundPitched(pitchPlus * 9);
-    //    platoArrayCount += 1;
-    //    platoDefinitivo.sprite = platosArray[platoArrayCount];
-    //}
-
     void PlaySoundPitched(float pitch)
     {
         FindObjectOfType<AudioManager>().Play("plato", 1 + pitch);
@@ -225,7 +144,7 @@ public class platosController : MonoBehaviour
         if (buttonCanBeActivated)
         {
             inputPlus = intensidad;
-            Invoke("PowerUpDisable", duracion+.1f);
+            Invoke("PowerUpDisable", duracion + .1f);
             buttonCanBeActivated = false;
             inputcount = 0;
         }
