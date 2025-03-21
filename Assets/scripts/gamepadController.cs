@@ -1,16 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using XInputDotNetPure;
 using UnityEngine.SceneManagement;
 
-public class gamepadController : GamepadInputHandler // Inherit from GamepadInputHandler
+public class gamepadController : GamepadInputHandler
 {
     public cameraShake cameraShake;
     public float duration = 0.02f;
     public float magnitude = 0.02f;
-
     public float magDurPlusser = 0.02f;
     float magDurVal;
     public float resta;
@@ -21,31 +18,28 @@ public class gamepadController : GamepadInputHandler // Inherit from GamepadInpu
     public float vibraD;
 
     public bool canVibrate;
-
     private bool buttonCanBeActivated;
     private int inputPlus;
-
     public GameObject stackController;
 
     private void Awake()
     {
         vibraD = .5f;
         vibraI = .5f;
-
         canVibrate = true;
         inputPlus = 1;
     }
 
-    protected override void Update() // Override the base class Update method
+    protected override void Update()
     {
-        base.Update(); // Call the base class Update method to ensure input handling works
+        base.Update();
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             SceneManager.LoadScene("goku");
         }
 
-        if (cameraShake.GetComponent<cameraShake>().shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
+        if (cameraShake.shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
         {
             if (IsButtonAPressed())
             {
@@ -63,26 +57,7 @@ public class gamepadController : GamepadInputHandler // Inherit from GamepadInpu
             StopVibracion();
         }
 
-        if (magDurVal < 1.5)
-        {
-            resta = 0.08f;
-        }
-        if (magDurVal < 2 && magDurVal > 1.5)
-        {
-            resta = 0.1f;
-        }
-        if (magDurVal < 3 && magDurVal > 2.5)
-        {
-            resta = 0.12f;
-        }
-        if (magDurVal < 4 && magDurVal > 3.5)
-        {
-            resta = 0.14f;
-        }
-        if (magDurVal > 4)
-        {
-            magDurVal = 4;
-        }
+        AdjustMagDurVal();
     }
 
     private void FixedUpdate()
@@ -91,34 +66,34 @@ public class gamepadController : GamepadInputHandler // Inherit from GamepadInpu
         {
             magDurVal -= resta * inputPlus * Time.deltaTime;
         }
-        else if (magDurVal < 1)
+        else
         {
             magDurVal = 1;
         }
     }
 
-    protected override void OnButtonAPressed() // Handle A button press
+    protected override void OnButtonAPressed()
     {
-        if (cameraShake.GetComponent<cameraShake>().shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
+        if (cameraShake.shaketrue && Time.timeScale != 0 && !stackController.GetComponent<stackController>().isSelling)
         {
             StartCoroutine(cameraShake.Shake(duration * magDurVal, magnitude * magDurVal));
             magDurVal += magDurPlusser * inputPlus;
         }
     }
 
-    protected override void OnButtonAReleased() // Handle A button release
+    protected override void OnButtonAReleased()
     {
         StopVibracion();
     }
 
     private void Vibracion()
     {
-        if (canVibrate)
+        if (canVibrate && Gamepad.current != null)
         {
-            GamePad.SetVibration(playerIndex, vibraI, vibraD);
+            Gamepad.current.SetMotorSpeeds(vibraI, vibraD);
             Invoke("StopVibracion", vibraDuration);
         }
-        else if (!canVibrate)
+        else
         {
             StopVibracion();
         }
@@ -126,7 +101,10 @@ public class gamepadController : GamepadInputHandler // Inherit from GamepadInpu
 
     private void StopVibracion()
     {
-        GamePad.SetVibration(playerIndex, 0f, 0f);
+        if (Gamepad.current != null)
+        {
+            Gamepad.current.SetMotorSpeeds(0f, 0f);
+        }
     }
 
     public void OnButtonActivatePowerUpShaker(int duracion, int intensidad)
@@ -137,15 +115,20 @@ public class gamepadController : GamepadInputHandler // Inherit from GamepadInpu
             Invoke("PowerUpDisable", duracion);
             buttonCanBeActivated = false;
         }
-        else
-        {
-            return;
-        }
     }
 
     private void PowerUpDisable()
     {
         inputPlus = 1;
         buttonCanBeActivated = true;
+    }
+
+    private void AdjustMagDurVal()
+    {
+        if (magDurVal < 1.5) resta = 0.08f;
+        else if (magDurVal < 2) resta = 0.1f;
+        else if (magDurVal < 3) resta = 0.12f;
+        else if (magDurVal < 4) resta = 0.14f;
+        else magDurVal = 4;
     }
 }

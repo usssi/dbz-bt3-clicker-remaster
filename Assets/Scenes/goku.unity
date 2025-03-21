@@ -5383,7 +5383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd3a01d7556324a9d591937072799f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   resta: 0
   isInStore: 0
@@ -5414,7 +5413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684503cc29ded8943bbb91a1665c8a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   mainCam: {fileID: 419584466}
   gradient:
@@ -5648,7 +5646,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c61ae0db9416f3418bfc0a2a41b9f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   stackController: {fileID: 758594531}
   platosContoller: {fileID: 758594531}
@@ -6911,7 +6908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684503cc29ded8943bbb91a1665c8a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   mainCam: {fileID: 519420031}
   gradient:
@@ -7051,7 +7047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadd3a01d7556324a9d591937072799f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   resta: 0
   isInStore: 0
@@ -7793,7 +7788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68120239f6907f44a92d368a73a0fb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   cameraShake: {fileID: 519420034}
   duration: 0.02
@@ -9575,7 +9569,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177a2982b0bd8ce4e99fb20a6166b590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   platoDefinitivo: {fileID: 1371358555}
   platosArray:
@@ -9605,7 +9598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d129fb13b16849d47a67cd80115e01db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   stack: {fileID: 7345014281498444937, guid: e4deb571da76b324bba84eb5e4dc5947, type: 3}
   stackDorado: {fileID: 6843877860616862644, guid: db20fe9abf37f2c4d8f3974be0a669bb, type: 3}
@@ -9697,7 +9689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b5d93cbc5964f44af3d69117866de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: 0
   inputMultiplier: 1
   goku1: {fileID: 1983691768}
   goku2: {fileID: 105691088}
@@ -18532,7 +18523,7 @@ MonoBehaviour:
   comboController: {fileID: 426354581}
   ereele: {fileID: 1894466164}
   storeController: {fileID: 1143859316}
-  firstSelectedButton: {fileID: 833588081}
+  firstSelectedButton: {fileID: 870706375}
   isCanvasOn: 0
   panelController: {fileID: 1378223988}
   titulo: {fileID: 1839767751}

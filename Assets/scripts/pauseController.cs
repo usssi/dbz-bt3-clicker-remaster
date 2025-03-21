@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class pauseController : MonoBehaviour
@@ -16,10 +16,6 @@ public class pauseController : MonoBehaviour
     public Button firstSelectedButton;
 
     public bool isCanvasOn;
-
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
 
     public GameObject panelController;
 
@@ -37,8 +33,6 @@ public class pauseController : MonoBehaviour
     Vector3 pene1;
 
     public GameObject buttonController;
-
-
 
     void Start()
     {
@@ -58,8 +52,8 @@ public class pauseController : MonoBehaviour
             {
                 timePingponged += Time.fixedDeltaTime * 0.1f;
             }
-           
-            if (timePingponged>=1)
+
+            if (timePingponged >= 1)
             {
                 canGoDown = true;
                 timePingponged = 1;
@@ -85,97 +79,81 @@ public class pauseController : MonoBehaviour
         titulo.GetComponent<Image>().color = Color.Lerp(customGrey, Color.white, timePingponged);
         titulo.transform.localScale = Vector3.Lerp(pene1, pene2, timePingponged);
 
-
+        // Pausar con ESC
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (buttonController.GetComponent<buttonController>().optionsToggle == true)
+            if (buttonController.GetComponent<buttonController>().optionsToggle)
             {
                 ButtonEnableDisableCanvas();
-
             }
             else
             {
                 buttonController.GetComponent<buttonController>().ButtonOptions();
                 ButtonEnableDisableCanvas();
-
             }
         }
 
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
-
-        if (prevState.Buttons.Start == ButtonState.Released && state.Buttons.Start == ButtonState.Pressed)
+        // Pausar con Start del gamepad
+        if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
         {
-            if (buttonController.GetComponent<buttonController>().optionsToggle == true)
+            if (buttonController.GetComponent<buttonController>().optionsToggle)
             {
                 ButtonEnableDisableCanvas();
-
             }
             else
             {
                 buttonController.GetComponent<buttonController>().ButtonOptions();
                 ButtonEnableDisableCanvas();
-
             }
-
         }
-        if (isCanvasOn)
+
+        // Cerrar el menú con B
+        if (isCanvasOn && Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
         {
-            if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
+            if (buttonController.GetComponent<buttonController>().optionsToggle)
             {
-                if (buttonController.GetComponent<buttonController>().optionsToggle == true)
-                {
-                    ButtonEnableDisableCanvas();
-
-                }
-                else
-                {
-                    buttonController.GetComponent<buttonController>().ButtonOptions();
-                }
+                ButtonEnableDisableCanvas();
             }
-            cameraObject.GetComponent<cameraShake>().enabled = false;
+            else
+            {
+                buttonController.GetComponent<buttonController>().ButtonOptions();
+            }
         }
+
+        cameraObject.GetComponent<cameraShake>().enabled = !isCanvasOn;
     }
 
     public void ButtonEnableDisableCanvas()
     {
-        if (isCanvasOn == false)
+        if (!isCanvasOn)
         {
             if (canBePaused)
             {
-                if (storeController.GetComponent<StoreController>().storeOn == true)
+                if (storeController.GetComponent<StoreController>().storeOn)
                 {
                     storeController.GetComponent<StoreController>().StoreToggle();
                 }
 
                 panelController.GetComponent<controllerPauseCanvasSize>().gameObject.SetActive(true);
 
-
                 FindObjectOfType<AudioManager>().Play("pauseOpen", 1.5f);
 
                 firstSelectedButton.Select();
-                //pauseCanvas.SetActive(true);
                 isCanvasOn = true;
 
                 Time.timeScale = 0;
 
-
-                //playerObj.SetActive(false);
                 playerObj.GetComponent<platosController>().enabled = false;
                 playerObj.GetComponent<stackControllerPrueba>().enabled = false;
                 playerObj.GetComponent<gokuPrueba>().enabled = false;
 
-
                 gamepadControllerObj.GetComponent<gamepadController>().vibraD = 0;
                 gamepadControllerObj.GetComponent<gamepadController>().vibraI = 0;
-
-                //gamepadControllerObj.GetComponent<gamepadController>().canVibrate = false;
 
                 comboController.GetComponent<comboController>().isPaused = true;
 
                 ereele.GetComponent<shakerScript>().magnitudeX = 0;
                 ereele.GetComponent<shakerScript>().magnitudeY = 0;
-
 
                 cameraObject.GetComponent<cameraShake>().enabled = false;
                 cameraObject.GetComponent<changeBG>().enabled = false;
@@ -184,21 +162,16 @@ public class pauseController : MonoBehaviour
 
                 canBePaused = false;
             }
-           
-
         }
-        else if (isCanvasOn)
+        else
         {
             FindObjectOfType<AudioManager>().Play("pauseClose", 1.5f);
 
             panelController.GetComponent<controllerPauseCanvasSize>().CanvasAnimationExit();
 
-    
-            //pauseCanvas.SetActive(false);
             isCanvasOn = false;
             Time.timeScale = 1;
 
-            //playerObj.SetActive(true);
             playerObj.GetComponent<platosController>().enabled = true;
             playerObj.GetComponent<stackControllerPrueba>().enabled = true;
             playerObj.GetComponent<gokuPrueba>().enabled = true;
@@ -206,13 +179,10 @@ public class pauseController : MonoBehaviour
             gamepadControllerObj.GetComponent<gamepadController>().vibraD = 0.5f;
             gamepadControllerObj.GetComponent<gamepadController>().vibraI = 0.5f;
 
-            //gamepadControllerObj.GetComponent<gamepadController>().canVibrate = true;
-
             comboController.GetComponent<comboController>().isPaused = false;
 
             ereele.GetComponent<shakerScript>().magnitudeX = 2;
             ereele.GetComponent<shakerScript>().magnitudeY = 2;
-
 
             cameraObject.GetComponent<cameraShake>().enabled = true;
             cameraObject.GetComponent<changeBG>().enabled = true;
@@ -221,7 +191,6 @@ public class pauseController : MonoBehaviour
             storeController.GetComponent<StoreController>().gamePaused = false;
 
             Invoke("CanBePausedResumed", .4f);
-
         }
     }
 
@@ -229,5 +198,4 @@ public class pauseController : MonoBehaviour
     {
         canBePaused = true;
     }
-
 }

@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class StoreController : MonoBehaviour
 {
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
-
     public GameObject storeCanvas;
     public bool storeOn;
     public bool gamePaused;
@@ -74,7 +70,7 @@ public class StoreController : MonoBehaviour
 
     public GameObject storecanvas2;
 
-    public Image iconMulti;    
+    public Image iconMulti;
     public Image iconTime;
     public Image iconShiny;
 
@@ -100,12 +96,9 @@ public class StoreController : MonoBehaviour
         TimeAnimation();
         MultiAnimation();
 
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
-
         if (gamePaused == false)
         {
-            if (prevState.Buttons.Back == ButtonState.Released && state.Buttons.Back == ButtonState.Pressed)
+            if (Gamepad.current != null && Gamepad.current.selectButton.wasPressedThisFrame)
             {
                 StoreToggle();
             }
@@ -147,7 +140,7 @@ public class StoreController : MonoBehaviour
             camController.GetComponent<zoomController>().isInStore = true;
             camController.GetComponent<changeBG>().isInStore = true;
 
-            if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
+            if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
             {
                 StoreToggle();
             }
@@ -159,23 +152,23 @@ public class StoreController : MonoBehaviour
         precioShinyText.text = "$" + precioShiny.ToString();
 
 
-        if (prevState.Buttons.Y == ButtonState.Released && state.Buttons.Y == ButtonState.Pressed)
+        if (Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame)
         {
             yPressed = true;
         }
 
-        if (prevState.Buttons.Y == ButtonState.Pressed && state.Buttons.Y == ButtonState.Released)
+        if (Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame)
         {
             yPressed = false;
         }
 
         if (yPressed)
         {
-            if (prevState.Buttons.X == ButtonState.Released && state.Buttons.X == ButtonState.Pressed)
+            if (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame)
             {
                 MoneyUP();
             }
-            if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
+            if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
             {
                 MoneyZero();
             }
@@ -215,7 +208,7 @@ public class StoreController : MonoBehaviour
 
     public void StoreToggle()
     {
-        if (storeOn == false && comboController.GetComponent<comboController>().comboCanBeActivated && 
+        if (storeOn == false && comboController.GetComponent<comboController>().comboCanBeActivated &&
             !stackController.GetComponent<stackController>().isSelling)
         {
             firstSelectedButton.Select();
@@ -232,7 +225,7 @@ public class StoreController : MonoBehaviour
             camController.GetComponent<changeBG>().enabled = false;
             camController.GetComponent<zoomController>().enabled = false;
 
-            if (prevState.Buttons.B == ButtonState.Released && state.Buttons.B == ButtonState.Pressed)
+            if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
             {
                 StoreToggle();
             }
@@ -516,7 +509,7 @@ public class StoreController : MonoBehaviour
 
         lerpedAnimationTimer += Time.deltaTime;
 
-        if (lerpedAnimationTimer>1)
+        if (lerpedAnimationTimer > 1)
         {
             lerpedAnimationTimer = 1;
             timeAnimationBool = false;

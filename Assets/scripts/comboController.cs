@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -249,24 +250,24 @@ public class comboController : GamepadInputHandler // Inherit from GamepadInputH
         comboFinalNUmber.SetActive(false);
     }
 
-    // Helper methods for input handling
     private bool IsRightShoulderPressed()
     {
-        return prevState.Buttons.RightShoulder == ButtonState.Released && state.Buttons.RightShoulder == ButtonState.Pressed;
+        return Gamepad.current != null && Gamepad.current.rightShoulder.wasPressedThisFrame;
     }
 
     private bool IsRightShoulderReleased()
     {
-        return prevState.Buttons.RightShoulder == ButtonState.Pressed && state.Buttons.RightShoulder == ButtonState.Released;
+        return Gamepad.current != null && Gamepad.current.rightShoulder.wasReleasedThisFrame;
     }
 
     private bool IsLeftShoulderPressed()
     {
-        return prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed;
+        return Gamepad.current != null && Gamepad.current.leftShoulder.wasPressedThisFrame;
     }
 
     private bool IsLeftShoulderReleased()
     {
-        return prevState.Buttons.LeftShoulder == ButtonState.Pressed && state.Buttons.LeftShoulder == ButtonState.Released;
+        return Gamepad.current != null && Gamepad.current.leftShoulder.wasReleasedThisFrame;
     }
+
 }
