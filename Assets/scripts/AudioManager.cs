@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
         }
 
         s.source.Play();
-        print("audio manager played" + name);
+        //print("audio manager played" + name);
     }
 
     public void OnButtonSelect()

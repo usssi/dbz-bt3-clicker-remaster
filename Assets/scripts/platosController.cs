@@ -5,132 +5,78 @@ using XInputDotNetPure;
 
 public class platosController : GamepadInputHandler // Inherit from GamepadInputHandler
 {
-    // Controla los platos de la mesa
-    private int numeroPlato = 0;
-
+    private float numeroPlato = 0f; // Cambio a float para interpolación suave
     public SpriteRenderer platoDefinitivo;
     public Sprite[] platosArray;
-    private int platoArrayCount;
+    public int platoArrayCount;
 
     private float pitchPlus = .1f;
-    private int inputPlus = 1;
-    private bool buttonCanBeActivated = true;
+    public int inputPlus = 1;
+    private int inputPlusOriginal = 1;
 
+    private bool buttonCanBeActivated = true;
     public int inputcount;
 
     private bool bool1;
     private bool bool2;
 
+    private stackControllerPrueba stackController;
+    private float smoothSpeed = 5f; // Velocidad de interpolación
+
+    private int triggerCount = 1; // Counter to track the number of times the condition is met
+
     private void Start()
     {
         bool1 = true;
+        stackController = FindObjectOfType<stackControllerPrueba>();
     }
 
     protected override void OnButtonAPressed() // Handle A button press
     {
-        numeroPlato = FindObjectOfType<stackControllerPrueba>().numeroStack;
-
-        if (numeroPlato >= 0 && numeroPlato <= 58)
+        if (stackController != null)
         {
-            inputcount += inputPlus;
-        }
-        else if (numeroPlato >= 59)
-        {
-            numeroPlato = 0;
+            int targetNumeroPlato = stackController.numeroStack;
+            if (targetNumeroPlato >= 0 && targetNumeroPlato <= 58)
+            {
+                inputcount += inputPlus;
+            }
+            else if (targetNumeroPlato >= 59)
+            {
+                numeroPlato = 54; // Mantener en el último valor en lugar de resetear a 0
+            }
         }
     }
 
-    protected override void Update() // Override the base class Update method
+    protected override void Update()
     {
-        base.Update(); // Call the base class Update method to ensure input handling works
+        base.Update(); // Ensure base input handling works
+        if (stackController != null)
+        {
+            if (stackController.numeroStack == 0)
+            {
+                numeroPlato = 0; // Sin interpolación si es 0
+            }
+            else if (stackController.numeroStack >= 59)
+            {
+                numeroPlato = 54; // Evita que parpadee volviendo a 0
+            }
+            else
+            {
+                numeroPlato = Mathf.Lerp(numeroPlato, stackController.numeroStack, Time.deltaTime * smoothSpeed);
+            }
+        }
 
-        // Update the plate sprite based on numeroPlato
-        if (numeroPlato >= 0 * 1 && numeroPlato < 6 * 1)
+        UpdatePlateSprite();
+    }
+
+    void UpdatePlateSprite()
+    {
+        int newPlatoArrayCount = Mathf.Clamp((int)(numeroPlato / 6), 0, platosArray.Length - 1);
+        if (newPlatoArrayCount != platoArrayCount)
         {
-            platoArrayCount = 0;
+            platoArrayCount = newPlatoArrayCount;
             platoDefinitivo.sprite = platosArray[platoArrayCount];
-            bool1 = false;
-            bool2 = true;
-        }
-        else if (numeroPlato >= 6 * 1 && numeroPlato < 6 * 2 && bool2)
-        {
-            platoArrayCount = 1;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(0);
-            bool1 = true;
-            bool2 = false;
-        }
-        else if (numeroPlato >= 6 * 2 && numeroPlato < 6 * 3 && bool1)
-        {
-            platoArrayCount = 2;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus);
-            bool1 = false;
-            bool2 = true;
-        }
-        else if (numeroPlato >= 6 * 3 && numeroPlato < 6 * 4 && bool2)
-        {
-            platoArrayCount = 3;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 2);
-            bool1 = true;
-            bool2 = false;
-        }
-        else if (numeroPlato >= 6 * 4 && numeroPlato < 6 * 5 && bool1)
-        {
-            platoArrayCount = 4;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 3);
-            bool1 = false;
-            bool2 = true;
-        }
-        else if (numeroPlato >= 6 * 5 && numeroPlato < 6 * 6 && bool2)
-        {
-            platoArrayCount = 5;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 4);
-            bool1 = true;
-            bool2 = false;
-        }
-        else if (numeroPlato >= 6 * 6 && numeroPlato < 6 * 7 && bool1)
-        {
-            platoArrayCount = 6;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 5);
-            bool1 = false;
-            bool2 = true;
-        }
-        else if (numeroPlato >= 6 * 7 && numeroPlato < 6 * 8 && bool2)
-        {
-            platoArrayCount = 7;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 6);
-            bool1 = true;
-            bool2 = false;
-        }
-        else if (numeroPlato >= 6 * 8 && numeroPlato < 6 * 9 && bool1)
-        {
-            platoArrayCount = 8;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 7);
-            bool1 = false;
-            bool2 = true;
-        }
-        else if (numeroPlato >= 6 * 9 && numeroPlato < 6 * 10 && bool2)
-        {
-            platoArrayCount = 9;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 8);
-            bool1 = true;
-            bool2 = false;
-        }
-        else if (numeroPlato >= 6 * 10 && bool1)
-        {
-            platoArrayCount = 10;
-            platoDefinitivo.sprite = platosArray[platoArrayCount];
-            PlaySoundPitched(pitchPlus * 9);
-            bool1 = false;
-            bool2 = true;
+            PlaySoundPitched(pitchPlus * platoArrayCount);
         }
     }
 
@@ -143,21 +89,31 @@ public class platosController : GamepadInputHandler // Inherit from GamepadInput
     {
         if (buttonCanBeActivated)
         {
+            inputPlusOriginal = inputPlus;
             inputPlus = intensidad;
             Invoke("PowerUpDisable", duracion + .1f);
             buttonCanBeActivated = false;
             inputcount = 0;
         }
-        else
-        {
-            return;
-        }
     }
 
     private void PowerUpDisable()
     {
-        inputPlus = 1;
+        inputPlus = inputPlusOriginal;
         buttonCanBeActivated = true;
         inputcount = 0;
+    }
+    public void InputPlusLogicMulti()
+    {
+        if (inputPlus < 10)
+        {
+            triggerCount++; // Increase the counter
+
+            if (triggerCount == 2) // Every two triggers
+            {
+                inputPlus++; // Increment inputPlus
+                triggerCount = 0; // Reset counter
+            }
+        }
     }
 }

@@ -7,58 +7,52 @@ public abstract class GamepadInputHandler : MonoBehaviour
     protected GamePadState state;
     public PlayerIndex playerIndex = PlayerIndex.One;
 
+    // Multiplicador de inputs (puede ser aumentado con mejoras)
+    public int inputMultiplier = 1;
+
     protected virtual void Update()
     {
         prevState = state;
         state = GamePad.GetState(playerIndex);
 
-        // Check for valid inputs (A button, Spacebar, or Left Click)
-        if (IsButtonAPressed() || IsSpacebarPressed() || IsLeftClickPressed())
+        // Verificar inputs válidos (botón A o clic izquierdo)
+        if (IsButtonAPressed() || IsLeftClickPressed())
         {
             OnButtonAPressed();
         }
-        else if (IsButtonAReleased() || IsSpacebarReleased() || IsLeftClickReleased())
+        else if (IsButtonAReleased() || IsLeftClickReleased())
         {
             OnButtonAReleased();
         }
     }
 
-    // Check if the A button is pressed
+    // Verificar si el botón A está presionado
     protected bool IsButtonAPressed()
     {
         return prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Pressed;
     }
 
-    // Check if the A button is released
+    // Verificar si el botón A está liberado
     protected bool IsButtonAReleased()
     {
         return prevState.Buttons.A == ButtonState.Released && state.Buttons.A == ButtonState.Released;
     }
 
-    // Check if the Spacebar is pressed
-    protected bool IsSpacebarPressed()
-    {
-        return Input.GetKeyDown(KeyCode.Space);
-    }
-
-    // Check if the Spacebar is released
-    protected bool IsSpacebarReleased()
-    {
-        return Input.GetKeyUp(KeyCode.Space);
-    }
-
-    // Check if the Left Mouse Button is pressed
+    // Verificar si el clic izquierdo está presionado
     protected bool IsLeftClickPressed()
     {
-        return Input.GetMouseButtonDown(0); // 0 is the left mouse button
+        return Input.GetMouseButtonDown(0); // 0 es el clic izquierdo
     }
 
-    // Check if the Left Mouse Button is released
+    // Verificar si el clic izquierdo está liberado
     protected bool IsLeftClickReleased()
     {
-        return Input.GetMouseButtonUp(0); // 0 is the left mouse button
+        return Input.GetMouseButtonUp(0); // 0 es el clic izquierdo
     }
 
+    // Método abstracto para manejar la pulsación del botón
     protected abstract void OnButtonAPressed();
+
+    // Método virtual para manejar la liberación del botón (opcional)
     protected virtual void OnButtonAReleased() { }
 }

@@ -27,6 +27,9 @@ public class stackController : MonoBehaviour
 
     public Button sellButton;
 
+    public int valorBlancas = 5;
+    public int valorDoradas = 10;
+
     public Text textoProfit;
     private int multicalc;
     private int profitNumber;
@@ -50,8 +53,6 @@ public class stackController : MonoBehaviour
         if (iStackNumber>=95)
         {
             SellStacks();
-            //comboController.GetComponent<comboController>().isPaused = true;
-            //gamepadController.GetComponent<gamepadController>().canVibrate = false;
             camController.GetComponent<zoomController>().isInStore = true;
             camController.GetComponent<changeBG>().isInStore = true;
         }
@@ -61,8 +62,6 @@ public class stackController : MonoBehaviour
         {
             iStackNumber = 0;
             playerObj.SetActive(true);
-            //comboController.GetComponent<comboController>().isPaused = false;
-            //gamepadController.GetComponent<gamepadController>().canVibrate = true;
             camController.GetComponent<zoomController>().isInStore = false;
             camController.GetComponent<changeBG>().isInStore = false;
             i = 0;
@@ -73,7 +72,6 @@ public class stackController : MonoBehaviour
         {
             i = iStackNumber;
             cameraObject.GetComponent<zoomController>().ZoomerController();
-            //Debug.Log("valor de i " + i);
         }
 
         //cuando los stacks activos llegan a 0 pone el zoom de la camara en normal
@@ -81,12 +79,10 @@ public class stackController : MonoBehaviour
         {
             if (iStackNumber > 0)
             {
-
             }
             if (iStackNumber == -1)
             {
                 cameraObject.GetComponent<zoomController>().CamDefault();
-                //Debug.Log("concha cam default");
                 iStackNumber = 0;
 
                 isSelling = false;
@@ -153,11 +149,11 @@ public class stackController : MonoBehaviour
         {
             if (item.GetComponent<SpriteRenderer>().enabled && item.GetComponent<SpriteRenderer>().color == Color.white)
             {
-                profitNumber += 5 * multicalc;
+                profitNumber += valorBlancas * multicalc;
             }
             else if (item.GetComponent<SpriteRenderer>().enabled && item.GetComponent<SpriteRenderer>().color != Color.white)
             {
-                profitNumber += 10 * multicalc;
+                profitNumber += valorDoradas * multicalc;
             }
         }
 
@@ -259,7 +255,7 @@ public class stackController : MonoBehaviour
 
                 storeController.GetComponent<StoreController>().initialMoney = (int)storeController.GetComponent<StoreController>().currentMoney;
 
-                storeController.GetComponent<StoreController>().money += 5* multiplierSeller;
+                storeController.GetComponent<StoreController>().money += valorBlancas* multiplierSeller;
             }
             else
             {
@@ -267,7 +263,7 @@ public class stackController : MonoBehaviour
 
                 storeController.GetComponent<StoreController>().initialMoney = (int)storeController.GetComponent<StoreController>().currentMoney;
 
-                storeController.GetComponent<StoreController>().money += 10* multiplierSeller;
+                storeController.GetComponent<StoreController>().money += valorDoradas* multiplierSeller;
             }
 
             yield return new WaitForSeconds(.1f);

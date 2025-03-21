@@ -265,10 +265,7 @@ public class StoreController : MonoBehaviour
             storecanvas2.GetComponent<Animator>().speed = 3;
 
             storecanvas2.GetComponent<Animator>().SetBool("storeisopen", true);
-
-
         }
-
     }
 
     public void StoreStackShiny()
@@ -394,15 +391,16 @@ public class StoreController : MonoBehaviour
 
     public void StoreMultiplier()
     {
-
         if (money >= precioMulti)
         {
+            FindObjectOfType<stackControllerPrueba>().InputPlusLogicMulti();
+            FindObjectOfType<platosController>().InputPlusLogicMulti();
+
             multiAnimationBool = true;
             lerpedAnimationMultiplier = 0;
 
             FindObjectOfType<AudioManager>().Play("buyMulti", 1 + pitchMulti);
             pitchMulti -= .05f;
-
 
             int intensidad = comboController.GetComponent<comboController>().intensidad;
 
@@ -441,7 +439,6 @@ public class StoreController : MonoBehaviour
                 comboController.GetComponent<comboController>().intensidad = 60;
 
             }
-
 
             initialMoney = (int)currentMoney;
 

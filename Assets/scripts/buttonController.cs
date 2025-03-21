@@ -243,17 +243,12 @@ public class buttonController : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("genericButtonOn", 1);
 
             sonidoText.GetComponent<TextMeshProUGUI>().text = "SOUND";
-
-
         }
-
     }
 
     public void ButtonQuit()
     {
         Application.Quit();
         FindObjectOfType<AudioManager>().Play("genericButtonOff", 1);
-
     }
-
 }

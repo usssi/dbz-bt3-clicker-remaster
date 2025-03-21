@@ -22,16 +22,23 @@ public class stackControllerPrueba : GamepadInputHandler // Inherit from Gamepad
     private float pitch = 0;
     private float pitchPlus = .05f;
 
-    private int inputPlus = 1;
+    public int inputPlus = 1;
+    private int inputPlusOriginal = 1;
 
     private bool buttonCanBeActivated = true;
 
     public int minChanceGold;
     private bool shouldBeGolden;
 
+    private int triggerCount = 1; // Counter
+
     private void Start()
     {
         stackOne = false;
+    }
+    protected override void Update()
+    {
+        base.Update(); // Ensure base input handling works
     }
 
     protected override void OnButtonAPressed() // Handle A button press
@@ -80,11 +87,11 @@ public class stackControllerPrueba : GamepadInputHandler // Inherit from Gamepad
         pitch = 0;
     }
 
-    #region PowerUp Logic
     public void OnButtonActivatePowerUpStack(int duracion, int intensidad)
     {
         if (buttonCanBeActivated)
         {
+            inputPlusOriginal = inputPlus;
             inputPlus = intensidad;
             Invoke("PowerUpDisable", duracion);
             buttonCanBeActivated = false;
@@ -93,8 +100,22 @@ public class stackControllerPrueba : GamepadInputHandler // Inherit from Gamepad
 
     private void PowerUpDisable()
     {
-        inputPlus = 1;
+        inputPlus = inputPlusOriginal;
         buttonCanBeActivated = true;
     }
-    #endregion
+
+    public void InputPlusLogicMulti()
+    {
+        if (inputPlus < 10)
+        {
+            triggerCount++; // Increase the counter
+
+            if (triggerCount == 2) // Every two triggers
+            {
+                inputPlus++; // Increment inputPlus
+                triggerCount = 0; // Reset counter
+            }
+        }
+    }
+
 }
