@@ -102,6 +102,10 @@ public class StoreController : MonoBehaviour
             {
                 StoreToggle();
             }
+            if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
+            {
+                StoreToggle();
+            }
         }
 
         //animacion money

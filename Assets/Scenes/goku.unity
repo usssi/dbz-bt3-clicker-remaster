@@ -5676,7 +5676,7 @@ MonoBehaviour:
   inpuTExt: {fileID: 2124998984}
   comboFinalNUmber: {fileID: 322372613}
   stackRealController: {fileID: 1207866787}
-  autoCombo: 1
+  autoCombo: 0
 --- !u!4 &426354583
 Transform:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
@@ -124,7 +123,7 @@ public class comboController : GamepadInputHandler // Inherit from GamepadInputH
                 maxPower.SetActive(true);
                 ereele.SetActive(true);
 
-                if ((l1 && r1) || autoCombo)
+                if ((l1 && r1) || autoCombo || Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
                 {
                     durationTimerText = duration + 1;
                     rLComboPress = true;
